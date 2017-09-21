@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>About | Pivot&#39;s Blog</title>
+  <title>Pivot&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   
@@ -11,14 +11,14 @@
   
   <meta name="description" content="善人同处，则日闻嘉训；恶人从游，则日生邪情">
 <meta property="og:type" content="website">
-<meta property="og:title" content="About">
+<meta property="og:title" content="Pivot&#39;s Blog">
 <meta property="og:url" content="http://blog.magicpose.com/about/index.html">
 <meta property="og:site_name" content="Pivot&#39;s Blog">
 <meta property="og:description" content="善人同处，则日闻嘉训；恶人从游，则日生邪情">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-21T11:20:42.662Z">
+<meta property="og:updated_time" content="2017-09-21T13:59:53.743Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About">
+<meta name="twitter:title" content="Pivot&#39;s Blog">
 <meta name="twitter:description" content="善人同处，则日闻嘉训；恶人从游，则日生邪情">
   
     <link rel="alternate" href="/atom.xml" title="Pivot&#39;s Blog" type="application/atom+xml">
@@ -55,11 +55,35 @@
   <body>
 
 
+	<!-- layout.ejs是主文件, 作者：pivot,时间：2017-09-21,描述：在此处才能判断编译路径 -->
+	
+  	
   
+  <div class="site-header-image">
+    <img id="originBg" width="100%" alt="Hike News" src="">
+  </div>
+
+  <div id="header-blur" class="site-header-image blur" style="position: absolute; top:0; height: 207px; min-height: 207px; min-width: 100%;">
+    <img id="blurBg" width="100%" style="top: 96%" alt="Hike News" src="">
+  </div>
+
+  <script>
+        var imgUrls = "css/images/pose01.jpg,https://source.unsplash.com/collection/954550/1920x1080,https://source.unsplash.com/collection/954550/1920x1081".split(",");
+        var random = Math.floor((Math.random() * imgUrls.length ));
+        if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+          document.getElementById("originBg").src=imgUrls[random];
+          document.getElementById("blurBg").src=imgUrls[random];
+        } else {
+          document.getElementById("originBg").src='/' + imgUrls[random];
+          document.getElementById("blurBg").src='/' + imgUrls[random];
+        }
+    </script>
+
+
 
 
 <header id="allheader" class="site-header" role="banner" 
-   >
+   style="width: 100%; position: absolute; top:0; background: rgba(255,255,255,.8);"  >
   <div class="clearfix container">
       <div class="site-branding">
 
@@ -80,40 +104,15 @@
             <div class="clearfix sf-menu">
               <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
                     
-                    	<!--
-                        	作者：pivot
-                        	时间：2017-09-21
-                        	描述：加入 data-desc,解决中文菜单时菜单项激活状态未改变的问题
-                        -->
-                      <li data-desc="/" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
                     
-                    	<!--
-                        	作者：pivot
-                        	时间：2017-09-21
-                        	描述：加入 data-desc,解决中文菜单时菜单项激活状态未改变的问题
-                        -->
-                      <li data-desc="archives" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
                     
-                    	<!--
-                        	作者：pivot
-                        	时间：2017-09-21
-                        	描述：加入 data-desc,解决中文菜单时菜单项激活状态未改变的问题
-                        -->
-                      <li data-desc="categories" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
                     
-                    	<!--
-                        	作者：pivot
-                        	时间：2017-09-21
-                        	描述：加入 data-desc,解决中文菜单时菜单项激活状态未改变的问题
-                        -->
-                      <li data-desc="tags" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
                     
-                    	<!--
-                        	作者：pivot
-                        	时间：2017-09-21
-                        	描述：加入 data-desc,解决中文菜单时菜单项激活状态未改变的问题
-                        -->
-                      <li data-desc="about" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
                     
               </ul>
             </div>
@@ -123,7 +122,7 @@
   </div>
 </header>
 
-
+  
   <div id="container">
     <div id="wrap">
             
@@ -132,16 +131,6 @@
           <section id="main"><article id="page-"  class="article article-type-page" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" class="article-title" itemprop="name">
-      About
-    </h1>
-  
-
-      </header>
     
     <div class="article-meta">
       
@@ -448,9 +437,6 @@
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
 <script src="/js/script.js"></script>

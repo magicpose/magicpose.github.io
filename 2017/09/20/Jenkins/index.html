@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Pivot&#39;s Blog">
 <meta property="og:description" content="说明该插件可配合在编译中或编译后将编译结果发送的远程主机,并执行脚本 1, 服务器配置 jenkins/系统管理/系统配置/Publish over SSH添加SSH Server,按照主机信息依次配置即可重点: 切记 Remote Directory 应该配置为所选登录用户可读写的目录  2, 项目配置 打开项目配置 设置Send files or execute commands over S">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-20T09:55:48.006Z">
+<meta property="og:updated_time" content="2017-09-21T12:51:27.847Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Publish Over SSH Plugin 配置说明">
 <meta name="twitter:description" content="说明该插件可配合在编译中或编译后将编译结果发送的远程主机,并执行脚本 1, 服务器配置 jenkins/系统管理/系统配置/Publish over SSH添加SSH Server,按照主机信息依次配置即可重点: 切记 Remote Directory 应该配置为所选登录用户可读写的目录  2, 项目配置 打开项目配置 设置Send files or execute commands over S">
@@ -55,7 +55,9 @@
   <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
-  
+	<!-- layout.ejs是主文件, 作者：pivot,时间：2017-09-21,描述：在此处才能判断编译路径 -->
+	
+  	
 
 
 <header id="allheader" class="site-header" role="banner" 
@@ -80,40 +82,15 @@
             <div class="clearfix sf-menu">
               <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
                     
-                    	<!--
-                        	作者：pivot
-                        	时间：2017-09-21
-                        	描述：加入 data-desc,解决中文菜单时菜单项激活状态未改变的问题
-                        -->
-                      <li data-desc="/" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
                     
-                    	<!--
-                        	作者：pivot
-                        	时间：2017-09-21
-                        	描述：加入 data-desc,解决中文菜单时菜单项激活状态未改变的问题
-                        -->
-                      <li data-desc="archives" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
                     
-                    	<!--
-                        	作者：pivot
-                        	时间：2017-09-21
-                        	描述：加入 data-desc,解决中文菜单时菜单项激活状态未改变的问题
-                        -->
-                      <li data-desc="categories" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
                     
-                    	<!--
-                        	作者：pivot
-                        	时间：2017-09-21
-                        	描述：加入 data-desc,解决中文菜单时菜单项激活状态未改变的问题
-                        -->
-                      <li data-desc="tags" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
                     
-                    	<!--
-                        	作者：pivot
-                        	时间：2017-09-21
-                        	描述：加入 data-desc,解决中文菜单时菜单项激活状态未改变的问题
-                        -->
-                      <li data-desc="about" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
                     
               </ul>
             </div>
@@ -123,7 +100,7 @@
   </div>
 </header>
 
-
+  
   <div id="container">
     <div id="wrap">
             
@@ -323,9 +300,6 @@
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
 <script src="/js/script.js"></script>
