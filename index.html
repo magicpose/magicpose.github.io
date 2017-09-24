@@ -107,6 +107,56 @@
         
           <section id="main">
   
+    <article id="post-java_exception_gc_overhead"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/09/24/java_exception_gc_overhead/">安装Hexo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/09/24/java_exception_gc_overhead/" class="article-date">
+	  <time datetime="2017-09-24T04:14:56.780Z" itemprop="datePublished">九月 24, 2017</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/djava/">JAVA</a>
+ 
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>导出excel的时候报错. </p>
+<h2 id="异常代码摘要"><a href="#异常代码摘要" class="headerlink" title="异常代码摘要"></a>异常代码摘要</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun </div><div class="line"> java.lang.OutOfMemoryError: GC overhead limit exceeded</div><div class="line">	at org.apache.xmlbeans.impl.store.Saver$SynthNamespaceSaver.&lt;init&gt;(Saver.java:863)</div><div class="line">	at org.apache.xmlbeans.impl.store.Saver.&lt;init&gt;(Saver.java:121)</div><div class="line">	at org.apache.xmlbeans.impl.store.Saver$TextSaver.&lt;init&gt;(Saver.java:896)</div><div class="line">	at org.apache.xmlbeans.impl.store.Cursor._xmlText(Cursor.java:546)</div><div class="line">	at org.apache.xmlbeans.impl.store.Cursor.xmlText(Cursor.java:2436)</div><div class="line">	at org.apache.xmlbeans.impl.values.XmlObjectBase.xmlText(XmlObjectBase.java:1455)</div><div class="line">	at org.apache.poi.xssf.model.SharedStringsTable.getKey(SharedStringsTable.java:130)</div><div class="line">	at org.apache.poi.xssf.model.SharedStringsTable.addEntry(SharedStringsTable.java:176)</div><div class="line">	at org.apache.poi.xssf.usermodel.XSSFCell.setCellValue(XSSFCell.java:345)</div><div class="line">	at org.apache.poi.xssf.usermodel.XSSFCell.setCellValue(XSSFCell.java:315)</div><div class="line">	at com.jfinal.ext.kit.excel.PoiExporter.processAsRecord(PoiExporter.java:199)</div><div class="line">	at com.jfinal.ext.kit.excel.PoiExporter.export(PoiExporter.java:135)</div><div class="line">	at com.jfinal.ext.render.excel.PoiRender.render(PoiRender.java:57)</div><div class="line">	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:99)</div><div class="line">	at org.edaw.report.common.handler.SessionHandler.handle(SessionHandler.java:30)</div><div class="line">	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:74)</div><div class="line">	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:240)</div><div class="line">	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:207)</div><div class="line">	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:212)</div><div class="line">	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:94)</div></pre></td></tr></table></figure>
+<h2 id="原因和解决方案"><a href="#原因和解决方案" class="headerlink" title="原因和解决方案"></a>原因和解决方案</h2><p>jdk的一种预警,表示gc可能发生内存溢出.可修改<code>jdk</code>参数尝试修复</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 修改 catalina.sh 启动参数</span></div><div class="line">JAVA_OPTS=<span class="string">"-server</span></div><div class="line"><span class="string">-Xms6144m</span></div><div class="line"><span class="string">-Xms6144m</span></div><div class="line"><span class="string">-XX:MaxPermSize=1024m -XX:MetaspaceSize=512m</span></div><div class="line"><span class="string">-XX:+UseG1GC</span></div><div class="line"><span class="string">-XX:ParallelGCThreads=6</span></div><div class="line"><span class="string">-XX:NewRatio=2 -XX:ConcGCThreads=4</span></div><div class="line"><span class="string">-XX:MaxGCPauseMillis=300</span></div><div class="line"><span class="string">-XX:InitiatingHeapOccupancyPercent=50 -XX:G1HeapRegionSize=4m -XX:+ExplicitGCInvokesConcurrent</span></div><div class="line"><span class="string">-XX:+PrintGCDetails -Xloggc:/mnt/wwwroot/server/tomcat/gclog/report_tomcat_gc.log"</span></div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/djava/">JAVA</a>
+
+      
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-first"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -418,6 +468,18 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2017/09/24/java_exception_gc_overhead/">安装Hexo</a></h6>
+              <span>九月 24, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2017/09/21/first/">first</a></h6>
               <span>九月 21, 2017</span>
             </div>
@@ -469,7 +531,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/test/">测试</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/djava/">JAVA</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/test/">测试</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -499,7 +561,7 @@
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
