@@ -3,23 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>GC overhead limit | Pivot&#39;s Blog</title>
+  <title>redis-cli 查看redis性能信息 | Pivot&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="redis" />
   
   
   
-  <meta name="description" content="问题描述导出excel的时候报错.  异常代码摘要12345678910111213141516171819202122org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun  java.lang.OutOfMemoryError: GC overhead limit exceeded	at org.apache.xmlbeans.">
+  
+  <meta name="description" content="info1234567891011# redis-cli -h 127.0.0.1 -p 4848 -a &apos;pwd&apos; info | grep -e &quot;connected_clients&quot; -e &quot;blocked_clients&quot; -e &quot;used_memory_human&quot; -e &quot;used_memory_peak_human&quot; -e &quot;rejected_connections&quot; -e &quot;evic">
+<meta name="keywords" content="redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GC overhead limit">
-<meta property="og:url" content="http://blog.magicpose.com/2017/09/24/java_exception_gc_overhead/index.html">
+<meta property="og:title" content="redis-cli 查看redis性能信息">
+<meta property="og:url" content="http://blog.magicpose.com/2017/09/26/redis-info/index.html">
 <meta property="og:site_name" content="Pivot&#39;s Blog">
-<meta property="og:description" content="问题描述导出excel的时候报错.  异常代码摘要12345678910111213141516171819202122org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun  java.lang.OutOfMemoryError: GC overhead limit exceeded	at org.apache.xmlbeans.">
+<meta property="og:description" content="info1234567891011# redis-cli -h 127.0.0.1 -p 4848 -a &apos;pwd&apos; info | grep -e &quot;connected_clients&quot; -e &quot;blocked_clients&quot; -e &quot;used_memory_human&quot; -e &quot;used_memory_peak_human&quot; -e &quot;rejected_connections&quot; -e &quot;evic">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-24T04:17:07.573Z">
+<meta property="og:updated_time" content="2017-09-26T07:41:11.733Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GC overhead limit">
-<meta name="twitter:description" content="问题描述导出excel的时候报错.  异常代码摘要12345678910111213141516171819202122org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun  java.lang.OutOfMemoryError: GC overhead limit exceeded	at org.apache.xmlbeans.">
+<meta name="twitter:title" content="redis-cli 查看redis性能信息">
+<meta name="twitter:description" content="info1234567891011# redis-cli -h 127.0.0.1 -p 4848 -a &apos;pwd&apos; info | grep -e &quot;connected_clients&quot; -e &quot;blocked_clients&quot; -e &quot;used_memory_human&quot; -e &quot;used_memory_peak_human&quot; -e &quot;rejected_connections&quot; -e &quot;evic">
   
     <link rel="alternate" href="/atom.xml" title="Pivot&#39;s Blog" type="application/atom+xml">
   
@@ -106,7 +109,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-java_exception_gc_overhead" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-redis-info" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
@@ -114,7 +117,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      GC overhead limit
+      redis-cli 查看redis性能信息
     </h1>
   
 
@@ -122,14 +125,11 @@
     
     <div class="article-meta">
       
-	<a href="/2017/09/24/java_exception_gc_overhead/" class="article-date">
-	  <time datetime="2017-09-24T04:14:56.780Z" itemprop="datePublished">九月 24, 2017</time>
+	<a href="/2017/09/26/redis-info/" class="article-date">
+	  <time datetime="2017-09-26T07:37:36.037Z" itemprop="datePublished">九月 26, 2017</time>
 	</a>
 
-      
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/djava/">JAVA</a>
- 
+       
       
 	<span id="busuanzi_container_page_pv">
 	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
@@ -138,18 +138,15 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>导出excel的时候报错. </p>
-<h2 id="异常代码摘要"><a href="#异常代码摘要" class="headerlink" title="异常代码摘要"></a>异常代码摘要</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun </div><div class="line"> java.lang.OutOfMemoryError: GC overhead limit exceeded</div><div class="line">	at org.apache.xmlbeans.impl.store.Saver$SynthNamespaceSaver.&lt;init&gt;(Saver.java:863)</div><div class="line">	at org.apache.xmlbeans.impl.store.Saver.&lt;init&gt;(Saver.java:121)</div><div class="line">	at org.apache.xmlbeans.impl.store.Saver$TextSaver.&lt;init&gt;(Saver.java:896)</div><div class="line">	at org.apache.xmlbeans.impl.store.Cursor._xmlText(Cursor.java:546)</div><div class="line">	at org.apache.xmlbeans.impl.store.Cursor.xmlText(Cursor.java:2436)</div><div class="line">	at org.apache.xmlbeans.impl.values.XmlObjectBase.xmlText(XmlObjectBase.java:1455)</div><div class="line">	at org.apache.poi.xssf.model.SharedStringsTable.getKey(SharedStringsTable.java:130)</div><div class="line">	at org.apache.poi.xssf.model.SharedStringsTable.addEntry(SharedStringsTable.java:176)</div><div class="line">	at org.apache.poi.xssf.usermodel.XSSFCell.setCellValue(XSSFCell.java:345)</div><div class="line">	at org.apache.poi.xssf.usermodel.XSSFCell.setCellValue(XSSFCell.java:315)</div><div class="line">	at com.jfinal.ext.kit.excel.PoiExporter.processAsRecord(PoiExporter.java:199)</div><div class="line">	at com.jfinal.ext.kit.excel.PoiExporter.export(PoiExporter.java:135)</div><div class="line">	at com.jfinal.ext.render.excel.PoiRender.render(PoiRender.java:57)</div><div class="line">	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:99)</div><div class="line">	at org.edaw.report.common.handler.SessionHandler.handle(SessionHandler.java:30)</div><div class="line">	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:74)</div><div class="line">	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:240)</div><div class="line">	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:207)</div><div class="line">	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:212)</div><div class="line">	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:94)</div></pre></td></tr></table></figure>
-<h2 id="原因和解决方案"><a href="#原因和解决方案" class="headerlink" title="原因和解决方案"></a>原因和解决方案</h2><p>jdk的一种预警,表示gc可能发生内存溢出.可修改<code>jdk</code>参数尝试修复</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 修改 catalina.sh 启动参数</span></div><div class="line">JAVA_OPTS=<span class="string">"-server</span></div><div class="line"><span class="string">-Xms6144m</span></div><div class="line"><span class="string">-Xms6144m</span></div><div class="line"><span class="string">-XX:MaxPermSize=1024m -XX:MetaspaceSize=512m</span></div><div class="line"><span class="string">-XX:+UseG1GC</span></div><div class="line"><span class="string">-XX:ParallelGCThreads=6</span></div><div class="line"><span class="string">-XX:NewRatio=2 -XX:ConcGCThreads=4</span></div><div class="line"><span class="string">-XX:MaxGCPauseMillis=300</span></div><div class="line"><span class="string">-XX:InitiatingHeapOccupancyPercent=50 -XX:G1HeapRegionSize=4m -XX:+ExplicitGCInvokesConcurrent</span></div><div class="line"><span class="string">-XX:+PrintGCDetails -Xloggc:/mnt/wwwroot/server/tomcat/gclog/report_tomcat_gc.log"</span></div></pre></td></tr></table></figure>
+        <h2 id="info"><a href="#info" class="headerlink" title="info"></a>info</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># redis-cli -h 127.0.0.1 -p 4848 -a 'pwd' info | grep -e "connected_clients" -e "blocked_clients" -e "used_memory_human" -e "used_memory_peak_human" -e "rejected_connections" -e "evicted_keys" -e "instantaneous"</span></div><div class="line"></div><div class="line">connected_clients:203</div><div class="line">blocked_clients:0</div><div class="line">used_memory_human:1.45G</div><div class="line">used_memory_peak_human:1.89G</div><div class="line">instantaneous_ops_per_sec:2029</div><div class="line">instantaneous_input_kbps:1646.20</div><div class="line">instantaneous_output_kbps:2149.47</div><div class="line">rejected_connections:0</div><div class="line">evicted_keys:0</div></pre></td></tr></table></figure>
       
     </div>
     <footer class="entry-meta entry-footer">
       
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/djava/">JAVA</a>
-
       
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+
       
         
 	<div id="comment">
@@ -183,19 +180,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/09/26/redis-info/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          redis-cli 查看redis性能信息
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/09/21/first/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/09/24/java_exception_gc_overhead/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">first</div>
+      <div class="article-nav-title">GC overhead limit</div>
     </a>
   
 </nav>
@@ -209,7 +197,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常代码摘要"><span class="nav-number">2.</span> <span class="nav-text">异常代码摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原因和解决方案"><span class="nav-number">3.</span> <span class="nav-text">原因和解决方案</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#info"><span class="nav-number">1.</span> <span class="nav-text">info</span></a></li></ol>
     
     </div>
   </aside>

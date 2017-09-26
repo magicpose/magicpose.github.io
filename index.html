@@ -107,6 +107,50 @@
         
           <section id="main">
   
+    <article id="post-redis-info"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/09/26/redis-info/">redis-cli 查看redis性能信息</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/09/26/redis-info/" class="article-date">
+	  <time datetime="2017-09-26T07:37:36.037Z" itemprop="datePublished">九月 26, 2017</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="info"><a href="#info" class="headerlink" title="info"></a>info</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># redis-cli -h 127.0.0.1 -p 4848 -a 'pwd' info | grep -e "connected_clients" -e "blocked_clients" -e "used_memory_human" -e "used_memory_peak_human" -e "rejected_connections" -e "evicted_keys" -e "instantaneous"</span></div><div class="line"></div><div class="line">connected_clients:203</div><div class="line">blocked_clients:0</div><div class="line">used_memory_human:1.45G</div><div class="line">used_memory_peak_human:1.89G</div><div class="line">instantaneous_ops_per_sec:2029</div><div class="line">instantaneous_input_kbps:1646.20</div><div class="line">instantaneous_output_kbps:2149.47</div><div class="line">rejected_connections:0</div><div class="line">evicted_keys:0</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-java_exception_gc_overhead"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -468,6 +512,18 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2017/09/26/redis-info/">redis-cli 查看redis性能信息</a></h6>
+              <span>九月 26, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2017/09/24/java_exception_gc_overhead/">GC overhead limit</a></h6>
               <span>九月 24, 2017</span>
             </div>
@@ -541,7 +597,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/edaw/">edaw</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uec/">uec</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/edaw/">edaw</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uec/">uec</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -551,7 +607,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/edaw/" style="font-size: 10px;">edaw</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/uec/" style="font-size: 10px;">uec</a>
+      <a href="/tags/edaw/" style="font-size: 10px;">edaw</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/uec/" style="font-size: 10px;">uec</a>
     </div>
   </div>
 
@@ -561,7 +617,7 @@
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
