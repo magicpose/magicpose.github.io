@@ -11,18 +11,18 @@
   
   
   
-  <meta name="description" content="info1234567891011# redis-cli -h 127.0.0.1 -p 4848 -a &apos;pwd&apos; info | grep -e &quot;connected_clients&quot; -e &quot;blocked_clients&quot; -e &quot;used_memory_human&quot; -e &quot;used_memory_peak_human&quot; -e &quot;rejected_connections&quot; -e &quot;evic">
+  <meta name="description" content="info123456789101112131415$ redis-cli -h 127.0.0.1 -p 4848 -a &apos;pwd&apos; info 	| grep -e &quot;connected_clients&quot; -e &quot;blocked_clients&quot; 	-e &quot;used_memory_human&quot; -e &quot;used_memory_peak_human&quot; 	-e &quot;rejected_connection">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis-cli 查看redis性能信息">
 <meta property="og:url" content="http://blog.magicpose.com/2017/09/26/redis-info/index.html">
 <meta property="og:site_name" content="Pivot&#39;s Blog">
-<meta property="og:description" content="info1234567891011# redis-cli -h 127.0.0.1 -p 4848 -a &apos;pwd&apos; info | grep -e &quot;connected_clients&quot; -e &quot;blocked_clients&quot; -e &quot;used_memory_human&quot; -e &quot;used_memory_peak_human&quot; -e &quot;rejected_connections&quot; -e &quot;evic">
+<meta property="og:description" content="info123456789101112131415$ redis-cli -h 127.0.0.1 -p 4848 -a &apos;pwd&apos; info 	| grep -e &quot;connected_clients&quot; -e &quot;blocked_clients&quot; 	-e &quot;used_memory_human&quot; -e &quot;used_memory_peak_human&quot; 	-e &quot;rejected_connection">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-26T07:41:11.733Z">
+<meta property="og:updated_time" content="2017-09-27T01:29:02.886Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis-cli 查看redis性能信息">
-<meta name="twitter:description" content="info1234567891011# redis-cli -h 127.0.0.1 -p 4848 -a &apos;pwd&apos; info | grep -e &quot;connected_clients&quot; -e &quot;blocked_clients&quot; -e &quot;used_memory_human&quot; -e &quot;used_memory_peak_human&quot; -e &quot;rejected_connections&quot; -e &quot;evic">
+<meta name="twitter:description" content="info123456789101112131415$ redis-cli -h 127.0.0.1 -p 4848 -a &apos;pwd&apos; info 	| grep -e &quot;connected_clients&quot; -e &quot;blocked_clients&quot; 	-e &quot;used_memory_human&quot; -e &quot;used_memory_peak_human&quot; 	-e &quot;rejected_connection">
   
     <link rel="alternate" href="/atom.xml" title="Pivot&#39;s Blog" type="application/atom+xml">
   
@@ -138,7 +138,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="info"><a href="#info" class="headerlink" title="info"></a>info</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># redis-cli -h 127.0.0.1 -p 4848 -a 'pwd' info | grep -e "connected_clients" -e "blocked_clients" -e "used_memory_human" -e "used_memory_peak_human" -e "rejected_connections" -e "evicted_keys" -e "instantaneous"</span></div><div class="line"></div><div class="line">connected_clients:203</div><div class="line">blocked_clients:0</div><div class="line">used_memory_human:1.45G</div><div class="line">used_memory_peak_human:1.89G</div><div class="line">instantaneous_ops_per_sec:2029</div><div class="line">instantaneous_input_kbps:1646.20</div><div class="line">instantaneous_output_kbps:2149.47</div><div class="line">rejected_connections:0</div><div class="line">evicted_keys:0</div></pre></td></tr></table></figure>
+        <h2 id="info"><a href="#info" class="headerlink" title="info"></a>info</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">$ redis-cli -h 127.0.0.1 -p 4848 -a <span class="string">'pwd'</span> info </div><div class="line">	| grep -e <span class="string">"connected_clients"</span> -e <span class="string">"blocked_clients"</span> </div><div class="line">	-e <span class="string">"used_memory_human"</span> -e <span class="string">"used_memory_peak_human"</span> </div><div class="line">	-e <span class="string">"rejected_connections"</span> -e <span class="string">"evicted_keys"</span> </div><div class="line">	-e <span class="string">"instantaneous"</span></div><div class="line"></div><div class="line">connected_clients:203</div><div class="line">blocked_clients:0</div><div class="line">used_memory_human:1.45G</div><div class="line">used_memory_peak_human:1.89G</div><div class="line">instantaneous_ops_per_sec:2029</div><div class="line">instantaneous_input_kbps:1646.20</div><div class="line">instantaneous_output_kbps:2149.47</div><div class="line">rejected_connections:0</div><div class="line">evicted_keys:0</div></pre></td></tr></table></figure>
       
     </div>
     <footer class="entry-meta entry-footer">
