@@ -1642,7 +1642,7 @@ pre .xml .cdata {
 @media screen and (min-width: 768px) {
   #sidebar {
     display: inline;
-    float: left;
+    float: right;
   }
 }
 @media screen and (max-width: 479px) {
