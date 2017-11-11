@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>H2 数据库安装 | Pivot&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="h2" />
+  
+  
+  
+  
+  <meta name="description" content="安装H2官方站点 安装JAVA环境,设置JAVA_HOME,CLASSPATH下载安装不多说12345678910# linux下设置java环境变量vim /etc/profileexport JAVA_HOME=/opt/java/jdk1.8.0_151export JAVA_BIN=$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar">
+<meta name="keywords" content="h2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="H2 数据库安装">
+<meta property="og:url" content="http://blog.magicpose.com/2017/11/11/h2/directory/index.html">
+<meta property="og:site_name" content="Pivot&#39;s Blog">
+<meta property="og:description" content="安装H2官方站点 安装JAVA环境,设置JAVA_HOME,CLASSPATH下载安装不多说12345678910# linux下设置java环境变量vim /etc/profileexport JAVA_HOME=/opt/java/jdk1.8.0_151export JAVA_BIN=$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.magicpose.com/img/h2/h2-01.png">
+<meta property="og:image" content="http://blog.magicpose.com/img/h2/h2-02.png">
+<meta property="og:updated_time" content="2017-11-11T10:29:40.060Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="H2 数据库安装">
+<meta name="twitter:description" content="安装H2官方站点 安装JAVA环境,设置JAVA_HOME,CLASSPATH下载安装不多说12345678910# linux下设置java环境变量vim /etc/profileexport JAVA_HOME=/opt/java/jdk1.8.0_151export JAVA_BIN=$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar">
+<meta name="twitter:image" content="http://blog.magicpose.com/img/h2/h2-01.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Pivot&#39;s Blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+	<!-- layout.ejs是主文件, 作者：pivot,时间：2017-09-21,描述：在此处才能判断编译路径 -->
+	
+  	
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="Pivot&#39;s Blog" rel="home"> Pivot&#39;s Blog </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">善人同处，则日闻嘉训；恶人从游，则日生邪情</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li data-desc="/" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li data-desc="archives" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li data-desc="categories" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li data-desc="tags" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li data-desc="about" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+  
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><!--
+	作者：646759661@qq.com
+	时间：2017-10-25
+	描述：width: 66%; 变更为 width: 100%;
+-->
+<article id="post-h2/directory" style="width: 100%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      H2 数据库安装
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/11/11/h2/directory/" class="article-date">
+	  <time datetime="2017-11-11T10:00:11.484Z" itemprop="datePublished">十一月 11, 2017</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a href="http://www.h2database.com" target="_blank" rel="external">H2官方站点</a></p>
+<h3 id="安装JAVA环境-设置JAVA-HOME-CLASSPATH"><a href="#安装JAVA环境-设置JAVA-HOME-CLASSPATH" class="headerlink" title="安装JAVA环境,设置JAVA_HOME,CLASSPATH"></a>安装JAVA环境,设置JAVA_HOME,CLASSPATH</h3><p>下载安装不多说<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># linux下设置java环境变量</span></div><div class="line">vim /etc/profile</div><div class="line"></div><div class="line"><span class="built_in">export</span> JAVA_HOME=/opt/java/jdk1.8.0_151</div><div class="line"><span class="built_in">export</span> JAVA_BIN=<span class="variable">$JAVA_HOME</span>/bin</div><div class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"></div><div class="line"><span class="comment"># 使设置生效</span></div><div class="line"><span class="built_in">source</span> /etc/profile</div></pre></td></tr></table></figure></p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>下载H2压缩包,解压,进入目录,<code>build.bat</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd bin</div><div class="line"># 运行 h2.bat</div><div class="line">h2.bat</div></pre></td></tr></table></figure></p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>下载H2压缩包,解压,进入目录,<code>./build.sh</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd bin</div><div class="line"># 运行 h2.sh &amp;</div><div class="line">./h2.sh &amp;</div></pre></td></tr></table></figure></p>
+<h3 id="启动配置-h2-server-properties"><a href="#启动配置-h2-server-properties" class="headerlink" title="启动配置 .h2.server.properties"></a>启动配置 <code>.h2.server.properties</code></h3><p>默认启动只允许本机访问,需要设置一个属性<code>webAllowOthers=true</code>.这个在windows下面启动之后有个配置页面可以进行配置<br><img src="http://blog.magicpose.com/img/h2/h2-01.png" alt="H2管理登录界面"><br><img src="http://blog.magicpose.com/img/h2/h2-02.png" alt="H2管理自定义设置界面"></p>
+<p>Linux下因为没有安装GUI,所以很恶心,启动后无法访问,访问提示<code>&quot;Sorry, remote connections (&#39;webAllowOthers&#39;) are disabled on this server&quot;</code></p>
+<p><strong>那么注意重点,方法来了:</strong><br>在<code>Windows</code>下配置后,会生成一个属性文件<code>.h2.server.properties</code>,文件位置在<code>&quot;C:\Users\用户目录&quot;</code>,打开该文件可以看到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">#H2 Server Properties</div><div class="line">#Sat Nov 11 17:40:03 CST 2017</div><div class="line">0=Generic JNDI Data Source|javax.naming.InitialContext|java\:comp/env/jdbc/Test|sa</div><div class="line">1=Generic Firebird Server|org.firebirdsql.jdbc.FBDriver|jdbc\:firebirdsql\:localhost\:/temp/firebird/test|sysdba</div><div class="line">10=Generic Derby (Server)|org.apache.derby.jdbc.ClientDriver|jdbc\:derby\://localhost\:1527/test;create\=true|sa</div><div class="line">11=Generic Derby (Embedded)|org.apache.derby.jdbc.EmbeddedDriver|jdbc\:derby\:test;create\=true|sa</div><div class="line">12=Generic H2 (Server)|org.h2.Driver|jdbc\:h2\:tcp\://localhost/~/test|sa</div><div class="line"># 注意此处默认有一个test数据库,数据库位置&quot;d:/opt/h2/data/test&quot;,用户名是test. 如果要移植到Linux下的时候将此处目录修改为在Linux上对应目录即可</div><div class="line">13=Generic H2 (Embedded)|org.h2.Driver|jdbc\:h2\:d\:/opt/h2/data/test|test</div><div class="line">2=Generic SQLite|org.sqlite.JDBC|jdbc\:sqlite\:test|sa</div><div class="line">3=Generic DB2|com.ibm.db2.jcc.DB2Driver|jdbc\:db2\://localhost/test|</div><div class="line">4=Generic Oracle|oracle.jdbc.driver.OracleDriver|jdbc\:oracle\:thin\:@localhost\:1521\:XE|sa</div><div class="line">5=Generic MS SQL Server 2000|com.microsoft.jdbc.sqlserver.SQLServerDriver|jdbc\:microsoft\:sqlserver\://localhost\:1433;DatabaseName\=sqlexpress|sa</div><div class="line">6=Generic MS SQL Server 2005|com.microsoft.sqlserver.jdbc.SQLServerDriver|jdbc\:sqlserver\://localhost;DatabaseName\=test|sa</div><div class="line">7=Generic PostgreSQL|org.postgresql.Driver|jdbc\:postgresql\:test|</div><div class="line">8=Generic MySQL|com.mysql.jdbc.Driver|jdbc\:mysql\://localhost\:3306/test|</div><div class="line">9=Generic HSQLDB|org.hsqldb.jdbcDriver|jdbc\:hsqldb\:test;hsqldb.default_table_type\=cached|sa</div><div class="line"># 允许远程访问</div><div class="line">webAllowOthers=true</div><div class="line"># 访问端口</div><div class="line">webPort=80</div><div class="line">webSSL=false</div></pre></td></tr></table></figure></p>
+<p>将<code>.h2.server.properties</code>文件移植到Linux系统下,如果是<code>root</code>,则放在<code>/root</code>目录下即可,其他用户放到<code>/home/用户目录</code>下(没测试过)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">#H2 Server Properties</div><div class="line">#Sat Nov 11 17:58:34 CST 2017</div><div class="line">0=Generic JNDI Data Source|javax.naming.InitialContext|java\:comp/env/jdbc/Test|sa</div><div class="line">1=Generic Firebird Server|org.firebirdsql.jdbc.FBDriver|jdbc\:firebirdsql\:localhost\:/temp/firebird/test|sysdba</div><div class="line">10=Generic Derby (Server)|org.apache.derby.jdbc.ClientDriver|jdbc\:derby\://localhost\:1527/test;create\=true|sa</div><div class="line">11=Generic Derby (Embedded)|org.apache.derby.jdbc.EmbeddedDriver|jdbc\:derby\:test;create\=true|sa</div><div class="line">12=Generic H2 (Server)|org.h2.Driver|jdbc\:h2\:tcp\://localhost/~/test|sa</div><div class="line">13=Generic H2 (Embedded)|org.h2.Driver|jdbc\:h2\:/opt/h2/data/xxx|xxx</div><div class="line">2=Generic SQLite|org.sqlite.JDBC|jdbc\:sqlite\:test|sa</div><div class="line">3=Generic DB2|com.ibm.db2.jcc.DB2Driver|jdbc\:db2\://localhost/test|</div><div class="line">4=Generic Oracle|oracle.jdbc.driver.OracleDriver|jdbc\:oracle\:thin\:@localhost\:1521\:XE|sa</div><div class="line">5=Generic MS SQL Server 2000|com.microsoft.jdbc.sqlserver.SQLServerDriver|jdbc\:microsoft\:sqlserver\://localhost\:1433;DatabaseName\=sqlexpress|sa</div><div class="line">6=Generic MS SQL Server 2005|com.microsoft.sqlserver.jdbc.SQLServerDriver|jdbc\:sqlserver\://localhost;DatabaseName\=test|sa</div><div class="line">7=Generic PostgreSQL|org.postgresql.Driver|jdbc\:postgresql\:test|</div><div class="line">8=Generic MySQL|com.mysql.jdbc.Driver|jdbc\:mysql\://localhost\:3306/test|</div><div class="line">9=Generic HSQLDB|org.hsqldb.jdbcDriver|jdbc\:hsqldb\:test;hsqldb.default_table_type\=cached|sa</div><div class="line">webAllowOthers=true</div><div class="line">webPort=80</div><div class="line">webSSL=false</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/h2/">h2</a></li></ul>
+
+      
+        
+	<section id="comments" class="comment">
+		<!-- UY BEGIN -->
+		<div id="uyan_frame"></div>
+		<script type="text/javascript">
+			(function(){
+			  var dsq = document.createElement('script');
+			  dsq.type = 'text/javascript';
+			  dsq.async = true;
+			  dsq.src = "http://v2.uyan.cc/code/uyan.js?uid=2145478";
+			  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			}());
+		</script>
+		<!-- UY END -->
+	</section>
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/10/gitbook/directory/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">GitBook Read</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装JAVA环境-设置JAVA-HOME-CLASSPATH"><span class="nav-number">1.1.</span> <span class="nav-text">安装JAVA环境,设置JAVA_HOME,CLASSPATH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows"><span class="nav-number">1.2.</span> <span class="nav-text">Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">1.3.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动配置-h2-server-properties"><span class="nav-number">1.4.</span> <span class="nav-text">启动配置 .h2.server.properties</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2017 Pivot&#39;s Blog All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>

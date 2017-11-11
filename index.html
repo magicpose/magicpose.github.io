@@ -112,6 +112,113 @@
 	时间：2017-10-25
 	描述：width: 66%; 变更为 width: 100%;
 -->
+<article id="post-h2/directory"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/11/11/h2/directory/">H2 数据库安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/11/11/h2/directory/" class="article-date">
+	  <time datetime="2017-11-11T10:00:11.484Z" itemprop="datePublished">十一月 11, 2017</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a href="http://www.h2database.com" target="_blank" rel="external">H2官方站点</a></p>
+<h3 id="安装JAVA环境-设置JAVA-HOME-CLASSPATH"><a href="#安装JAVA环境-设置JAVA-HOME-CLASSPATH" class="headerlink" title="安装JAVA环境,设置JAVA_HOME,CLASSPATH"></a>安装JAVA环境,设置JAVA_HOME,CLASSPATH</h3><p>下载安装不多说<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># linux下设置java环境变量</span></div><div class="line">vim /etc/profile</div><div class="line"></div><div class="line"><span class="built_in">export</span> JAVA_HOME=/opt/java/jdk1.8.0_151</div><div class="line"><span class="built_in">export</span> JAVA_BIN=<span class="variable">$JAVA_HOME</span>/bin</div><div class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"></div><div class="line"><span class="comment"># 使设置生效</span></div><div class="line"><span class="built_in">source</span> /etc/profile</div></pre></td></tr></table></figure></p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>下载H2压缩包,解压,进入目录,<code>build.bat</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd bin</div><div class="line"># 运行 h2.bat</div><div class="line">h2.bat</div></pre></td></tr></table></figure></p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>下载H2压缩包,解压,进入目录,<code>./build.sh</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd bin</div><div class="line"># 运行 h2.sh &amp;</div><div class="line">./h2.sh &amp;</div></pre></td></tr></table></figure></p>
+<h3 id="启动配置-h2-server-properties"><a href="#启动配置-h2-server-properties" class="headerlink" title="启动配置 .h2.server.properties"></a>启动配置 <code>.h2.server.properties</code></h3><p>默认启动只允许本机访问,需要设置一个属性<code>webAllowOthers=true</code>.这个在windows下面启动之后有个配置页面可以进行配置<br><img src="http://blog.magicpose.com/img/h2/h2-01.png" alt="H2管理登录界面"><br><img src="http://blog.magicpose.com/img/h2/h2-02.png" alt="H2管理自定义设置界面"></p>
+<p>Linux下因为没有安装GUI,所以很恶心,启动后无法访问,访问提示<code>&quot;Sorry, remote connections (&#39;webAllowOthers&#39;) are disabled on this server&quot;</code></p>
+<p><strong>那么注意重点,方法来了:</strong><br>在<code>Windows</code>下配置后,会生成一个属性文件<code>.h2.server.properties</code>,文件位置在<code>&quot;C:\Users\用户目录&quot;</code>,打开该文件可以看到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">#H2 Server Properties</div><div class="line">#Sat Nov 11 17:40:03 CST 2017</div><div class="line">0=Generic JNDI Data Source|javax.naming.InitialContext|java\:comp/env/jdbc/Test|sa</div><div class="line">1=Generic Firebird Server|org.firebirdsql.jdbc.FBDriver|jdbc\:firebirdsql\:localhost\:/temp/firebird/test|sysdba</div><div class="line">10=Generic Derby (Server)|org.apache.derby.jdbc.ClientDriver|jdbc\:derby\://localhost\:1527/test;create\=true|sa</div><div class="line">11=Generic Derby (Embedded)|org.apache.derby.jdbc.EmbeddedDriver|jdbc\:derby\:test;create\=true|sa</div><div class="line">12=Generic H2 (Server)|org.h2.Driver|jdbc\:h2\:tcp\://localhost/~/test|sa</div><div class="line"># 注意此处默认有一个test数据库,数据库位置&quot;d:/opt/h2/data/test&quot;,用户名是test. 如果要移植到Linux下的时候将此处目录修改为在Linux上对应目录即可</div><div class="line">13=Generic H2 (Embedded)|org.h2.Driver|jdbc\:h2\:d\:/opt/h2/data/test|test</div><div class="line">2=Generic SQLite|org.sqlite.JDBC|jdbc\:sqlite\:test|sa</div><div class="line">3=Generic DB2|com.ibm.db2.jcc.DB2Driver|jdbc\:db2\://localhost/test|</div><div class="line">4=Generic Oracle|oracle.jdbc.driver.OracleDriver|jdbc\:oracle\:thin\:@localhost\:1521\:XE|sa</div><div class="line">5=Generic MS SQL Server 2000|com.microsoft.jdbc.sqlserver.SQLServerDriver|jdbc\:microsoft\:sqlserver\://localhost\:1433;DatabaseName\=sqlexpress|sa</div><div class="line">6=Generic MS SQL Server 2005|com.microsoft.sqlserver.jdbc.SQLServerDriver|jdbc\:sqlserver\://localhost;DatabaseName\=test|sa</div><div class="line">7=Generic PostgreSQL|org.postgresql.Driver|jdbc\:postgresql\:test|</div><div class="line">8=Generic MySQL|com.mysql.jdbc.Driver|jdbc\:mysql\://localhost\:3306/test|</div><div class="line">9=Generic HSQLDB|org.hsqldb.jdbcDriver|jdbc\:hsqldb\:test;hsqldb.default_table_type\=cached|sa</div><div class="line"># 允许远程访问</div><div class="line">webAllowOthers=true</div><div class="line"># 访问端口</div><div class="line">webPort=80</div><div class="line">webSSL=false</div></pre></td></tr></table></figure></p>
+<p>将<code>.h2.server.properties</code>文件移植到Linux系统下,如果是<code>root</code>,则放在<code>/root</code>目录下即可,其他用户放到<code>/home/用户目录</code>下(没测试过)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">#H2 Server Properties</div><div class="line">#Sat Nov 11 17:58:34 CST 2017</div><div class="line">0=Generic JNDI Data Source|javax.naming.InitialContext|java\:comp/env/jdbc/Test|sa</div><div class="line">1=Generic Firebird Server|org.firebirdsql.jdbc.FBDriver|jdbc\:firebirdsql\:localhost\:/temp/firebird/test|sysdba</div><div class="line">10=Generic Derby (Server)|org.apache.derby.jdbc.ClientDriver|jdbc\:derby\://localhost\:1527/test;create\=true|sa</div><div class="line">11=Generic Derby (Embedded)|org.apache.derby.jdbc.EmbeddedDriver|jdbc\:derby\:test;create\=true|sa</div><div class="line">12=Generic H2 (Server)|org.h2.Driver|jdbc\:h2\:tcp\://localhost/~/test|sa</div><div class="line">13=Generic H2 (Embedded)|org.h2.Driver|jdbc\:h2\:/opt/h2/data/xxx|xxx</div><div class="line">2=Generic SQLite|org.sqlite.JDBC|jdbc\:sqlite\:test|sa</div><div class="line">3=Generic DB2|com.ibm.db2.jcc.DB2Driver|jdbc\:db2\://localhost/test|</div><div class="line">4=Generic Oracle|oracle.jdbc.driver.OracleDriver|jdbc\:oracle\:thin\:@localhost\:1521\:XE|sa</div><div class="line">5=Generic MS SQL Server 2000|com.microsoft.jdbc.sqlserver.SQLServerDriver|jdbc\:microsoft\:sqlserver\://localhost\:1433;DatabaseName\=sqlexpress|sa</div><div class="line">6=Generic MS SQL Server 2005|com.microsoft.sqlserver.jdbc.SQLServerDriver|jdbc\:sqlserver\://localhost;DatabaseName\=test|sa</div><div class="line">7=Generic PostgreSQL|org.postgresql.Driver|jdbc\:postgresql\:test|</div><div class="line">8=Generic MySQL|com.mysql.jdbc.Driver|jdbc\:mysql\://localhost\:3306/test|</div><div class="line">9=Generic HSQLDB|org.hsqldb.jdbcDriver|jdbc\:hsqldb\:test;hsqldb.default_table_type\=cached|sa</div><div class="line">webAllowOthers=true</div><div class="line">webPort=80</div><div class="line">webSSL=false</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/h2/">h2</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <!--
+	作者：646759661@qq.com
+	时间：2017-10-25
+	描述：width: 66%; 变更为 width: 100%;
+-->
+<article id="post-gitbook/directory"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/11/10/gitbook/directory/">GitBook Read</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/11/10/gitbook/directory/" class="article-date">
+	  <time datetime="2017-11-10T01:32:49.868Z" itemprop="datePublished">十一月 10, 2017</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>## </p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitBook/">GitBook</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <!--
+	作者：646759661@qq.com
+	时间：2017-10-25
+	描述：width: 66%; 变更为 width: 100%;
+-->
 <article id="post-eat/menu"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -547,62 +654,12 @@
 <!-- Table of Contents -->
 
   
-    <!--
-	作者：646759661@qq.com
-	时间：2017-10-25
-	描述：width: 66%; 变更为 width: 100%;
--->
-<article id="post-hello-world"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+
+
+  <nav id="page-nav">
     
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/09/20/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/09/20/hello-world/" class="article-date">
-	  <time datetime="2017-09-20T06:22:37.652Z" itemprop="datePublished">九月 20, 2017</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+  </nav>
 
 </section>
           <aside id="sidebar">
@@ -707,6 +764,30 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2017/11/11/h2/directory/">H2 数据库安装</a></h6>
+              <span>十一月 11, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2017/11/10/gitbook/directory/">GitBook Read</a></h6>
+              <span>十一月 10, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2017/10/25/eat/menu/">这一天天的吃食</a></h6>
               <span>十月 25, 2017</span>
             </div>
@@ -749,30 +830,6 @@
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/09/24/java_exception_gc_overhead/">GC overhead limit</a></h6>
-              <span>九月 24, 2017</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/09/21/first/">first</a></h6>
-              <span>九月 21, 2017</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -792,7 +849,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/eat/">eat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/economic/">economic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edaw/">edaw</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uec/">uec</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitBook/">GitBook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eat/">eat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/economic/">economic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edaw/">edaw</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/h2/">h2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uec/">uec</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -802,7 +859,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/eat/" style="font-size: 10px;">eat</a> <a href="/tags/economic/" style="font-size: 10px;">economic</a> <a href="/tags/edaw/" style="font-size: 10px;">edaw</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/uec/" style="font-size: 10px;">uec</a>
+      <a href="/tags/GitBook/" style="font-size: 10px;">GitBook</a> <a href="/tags/eat/" style="font-size: 10px;">eat</a> <a href="/tags/economic/" style="font-size: 10px;">economic</a> <a href="/tags/edaw/" style="font-size: 10px;">edaw</a> <a href="/tags/h2/" style="font-size: 10px;">h2</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/uec/" style="font-size: 10px;">uec</a>
     </div>
   </div>
 
@@ -812,7 +869,7 @@
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
