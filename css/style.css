@@ -229,7 +229,7 @@ body {
 .inner {
   display: inline;
   float: left;
-  width: 100%;
+  width: 65%;
   margin: 0 0%;
 }
 .left,
@@ -267,7 +267,7 @@ body {
   #main {
     display: inline;
     float: left;
-    width: 58.333333333333336%;
+    width: 65%;
     margin: 0 0%;
   }
 }
