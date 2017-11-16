@@ -214,8 +214,9 @@ body {
   transform: scale(1.4, 3.2);
 }
 .outer {
-  max-width: 1040px;
+  max-width: 780px;
   margin: 40px auto;
+  padding: 0 0px;
 }
 .outer:before,
 .outer:after {
@@ -228,8 +229,8 @@ body {
 .inner {
   display: inline;
   float: left;
-  width: 98.0392156862745%;
-  margin: 0 0.980392156862745%;
+  width: 100%;
+  margin: 0 0%;
 }
 .left,
 .alignleft {
@@ -266,8 +267,8 @@ body {
   #main {
     display: inline;
     float: left;
-    width: 64.70588235294117%;
-    margin: 0 0.980392156862745%;
+    width: 66.66666666666666%;
+    margin: 0 0%;
   }
 }
 .archive-year,
