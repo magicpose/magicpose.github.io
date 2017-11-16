@@ -1259,6 +1259,30 @@ ul.widget-tab-nav {
 
 /* RESPONSIVE SUPPORT
 ----------------------------------------------- */
+@media screen and (max-width: 1300px) {
+	.container {
+		width: 90%;
+		}
+	.site-content {
+		margin-right: 40%;
+		}
+	.site-sidebar {
+		width: 35%;
+		margin-left: -35%;
+		}
+	.site-sidebar .widget_search .search-field {
+		width: 95%;
+		margin: 0 0 10px;
+		}
+	.site-extra .widget-area {
+		width: 50%;
+		}
+	.outer {
+	    max-width: 90%;
+	    margin: 40px auto;
+	    padding: 0 0px;
+	}
+	}
 @media screen and (max-width: 960px) {
 	.container {
 		width: 90%;
