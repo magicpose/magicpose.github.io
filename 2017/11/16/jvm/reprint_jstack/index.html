@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java jstack 用法 | Pivot&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="JVM" />
+  
+  
+  
+  
+  <meta name="description" content="jstack是jdk中自带的用于查看进程内线程栈的工具。当程序出现死锁时，我们可以通过jstack打印线程栈找到问题。 找出代码中的死锁学习从一段简单的代码开始:12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849public class Main &amp;#123;    pu">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java jstack 用法">
+<meta property="og:url" content="http://blog.magicpose.com/2017/11/16/jvm/reprint_jstack/index.html">
+<meta property="og:site_name" content="Pivot&#39;s Blog">
+<meta property="og:description" content="jstack是jdk中自带的用于查看进程内线程栈的工具。当程序出现死锁时，我们可以通过jstack打印线程栈找到问题。 找出代码中的死锁学习从一段简单的代码开始:12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849public class Main &amp;#123;    pu">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.magicpose.com/img/jstack-01.png">
+<meta property="og:updated_time" content="2017-11-16T04:18:16.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java jstack 用法">
+<meta name="twitter:description" content="jstack是jdk中自带的用于查看进程内线程栈的工具。当程序出现死锁时，我们可以通过jstack打印线程栈找到问题。 找出代码中的死锁学习从一段简单的代码开始:12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849public class Main &amp;#123;    pu">
+<meta name="twitter:image" content="http://blog.magicpose.com/img/jstack-01.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Pivot&#39;s Blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+	<!-- layout.ejs是主文件, 作者：pivot,时间：2017-09-21,描述：在此处才能判断编译路径 -->
+	
+  	
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="Pivot&#39;s Blog" rel="home"> Pivot&#39;s Blog </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">善人同处，则日闻嘉训；恶人从游，则日生邪情</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li data-desc="/" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li data-desc="archives" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li data-desc="categories" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li data-desc="tags" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li data-desc="about" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+  
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><!--
+	作者：646759661@qq.com
+	时间：2017-10-25
+	描述：width: 66%; 变更为 width: 100%;
+-->
+<article id="post-jvm/reprint_jstack" style="width: 100%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Java jstack 用法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/11/16/jvm/reprint_jstack/" class="article-date">
+	  <time datetime="2017-11-16T03:56:13.318Z" itemprop="datePublished">十一月 16, 2017</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>jstack是jdk中自带的用于查看进程内线程栈的工具。当程序出现死锁时，我们可以通过jstack打印线程栈找到问题。</p>
+<h3 id="找出代码中的死锁"><a href="#找出代码中的死锁" class="headerlink" title="找出代码中的死锁"></a>找出代码中的死锁</h3><p>学习从一段简单的代码开始:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">public class Main &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        test1();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void test1() &#123;</div><div class="line">        final Object lock1 = new Object();</div><div class="line">        final Object lock2 = new Object();</div><div class="line">        Thread thread=new Thread(new Runnable() &#123;</div><div class="line">            public void run() &#123;</div><div class="line">                synchronized (lock1) &#123;</div><div class="line">                    try &#123;</div><div class="line">                        for(int i=0;i&lt;20;i++) &#123;</div><div class="line">                            Thread.sleep(1000);</div><div class="line">                            System.out.println(Thread.currentThread().getName()+&quot; &quot;+i);</div><div class="line">                        &#125;</div><div class="line">                        synchronized (lock2) &#123;</div><div class="line">                            for(int i=20;i&lt;40;i++) &#123;</div><div class="line">                                Thread.sleep(1000);</div><div class="line">                                System.out.println(Thread.currentThread().getName()+&quot; &quot;+i);</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125; catch (InterruptedException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        thread.start();</div><div class="line">        synchronized (lock2) &#123;</div><div class="line">            try &#123;</div><div class="line">                for(int i=0;i&lt;20;i++) &#123;</div><div class="line">                    Thread.sleep(1000);</div><div class="line">                    System.out.println(Thread.currentThread().getName()+&quot; &quot;+i);</div><div class="line">                &#125;</div><div class="line">                synchronized (lock1) &#123;</div><div class="line">                    for(int i=20;i&lt;40;i++) &#123;</div><div class="line">                        Thread.sleep(1000);</div><div class="line">                        System.out.println(Thread.currentThread().getName()+&quot; &quot;+i);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>肉眼都能看出来的死锁，程序运行20s后进入死锁状态。<br>首先我们先找出这个程序的进程id,建议用jps,而不是ps,原因是jps只会显示当前用户下面的java进程，等于自动帮我们过滤了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">jps -l</div><div class="line"></div><div class="line">$ jps</div><div class="line">8896 Bootstrap</div><div class="line">3941 Bootstrap</div><div class="line">11718 Jps</div><div class="line">9711 Bootstrap</div></pre></td></tr></table></figure></p>
+<p>jstack 显示堆栈信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line">$ jstack 9711</div><div class="line"></div><div class="line">2017-05-23 13:57:22</div><div class="line">Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.45-b02 mixed mode):</div><div class="line"></div><div class="line">&quot;Attach Listener&quot; #12 daemon prio=9 os_prio=31 tid=0x00007ff0f780c800 nid=0x4507 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Thread-0&quot; #11 prio=5 os_prio=31 tid=0x00007ff0f80c0000 nid=0x5a03 waiting for monitor entry [0x0000700002310000]</div><div class="line">   java.lang.Thread.State: BLOCKED (on object monitor)</div><div class="line">    at Main$1.run(Main.java:33)</div><div class="line">    - waiting to lock &lt;0x000000076adb1a98&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000076adb1a88&gt; (a java.lang.Object)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line"></div><div class="line">&quot;Service Thread&quot; #10 daemon prio=9 os_prio=31 tid=0x00007ff0f980b800 nid=0x5603 runnable [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C1 CompilerThread3&quot; #9 daemon prio=9 os_prio=31 tid=0x00007ff0f6803000 nid=0x5403 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C2 CompilerThread2&quot; #8 daemon prio=9 os_prio=31 tid=0x00007ff0f6802800 nid=0x5203 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C2 CompilerThread1&quot; #7 daemon prio=9 os_prio=31 tid=0x00007ff0f6801800 nid=0x5003 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C2 CompilerThread0&quot; #6 daemon prio=9 os_prio=31 tid=0x00007ff0f90de800 nid=0x4e03 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Monitor Ctrl-Break&quot; #5 daemon prio=5 os_prio=31 tid=0x00007ff0f90dc800 nid=0x4c03 runnable [0x0000700001bfb000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line">    at java.net.SocketInputStream.socketRead0(Native Method)</div><div class="line">    at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)</div><div class="line">    at java.net.SocketInputStream.read(SocketInputStream.java:170)</div><div class="line">    at java.net.SocketInputStream.read(SocketInputStream.java:141)</div><div class="line">    at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:284)</div><div class="line">    at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)</div><div class="line">    at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)</div><div class="line">    - locked &lt;0x000000076af12b68&gt; (a java.io.InputStreamReader)</div><div class="line">    at java.io.InputStreamReader.read(InputStreamReader.java:184)</div><div class="line">    at java.io.BufferedReader.fill(BufferedReader.java:161)</div><div class="line">    at java.io.BufferedReader.readLine(BufferedReader.java:324)</div><div class="line">    - locked &lt;0x000000076af12b68&gt; (a java.io.InputStreamReader)</div><div class="line">    at java.io.BufferedReader.readLine(BufferedReader.java:389)</div><div class="line">    at com.intellij.rt.execution.application.AppMainV2$1.run(AppMainV2.java:64)</div><div class="line"></div><div class="line">&quot;Signal Dispatcher&quot; #4 daemon prio=9 os_prio=31 tid=0x00007ff0f8039800 nid=0x4a03 runnable [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Finalizer&quot; #3 daemon prio=8 os_prio=31 tid=0x00007ff0f9803000 nid=0x3903 in Object.wait() [0x0000700001972000]</div><div class="line">   java.lang.Thread.State: WAITING (on object monitor)</div><div class="line">    at java.lang.Object.wait(Native Method)</div><div class="line">    - waiting on &lt;0x000000076ab06f58&gt; (a java.lang.ref.ReferenceQueue$Lock)</div><div class="line">    at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)</div><div class="line">    - locked &lt;0x000000076ab06f58&gt; (a java.lang.ref.ReferenceQueue$Lock)</div><div class="line">    at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)</div><div class="line">    at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)</div><div class="line"></div><div class="line">&quot;Reference Handler&quot; #2 daemon prio=10 os_prio=31 tid=0x00007ff0f9802000 nid=0x3703 in Object.wait() [0x000070000186f000]</div><div class="line">   java.lang.Thread.State: WAITING (on object monitor)</div><div class="line">    at java.lang.Object.wait(Native Method)</div><div class="line">    - waiting on &lt;0x000000076ab06998&gt; (a java.lang.ref.Reference$Lock)</div><div class="line">    at java.lang.Object.wait(Object.java:502)</div><div class="line">    at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:157)</div><div class="line">    - locked &lt;0x000000076ab06998&gt; (a java.lang.ref.Reference$Lock)</div><div class="line"></div><div class="line">&quot;main&quot; #1 prio=5 os_prio=31 tid=0x00007ff0f8002000 nid=0x1c03 waiting for monitor entry [0x0000700000e51000]</div><div class="line">   java.lang.Thread.State: BLOCKED (on object monitor)</div><div class="line">    at Main.test1(Main.java:52)</div><div class="line">    - waiting to lock &lt;0x000000076adb1a88&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000076adb1a98&gt; (a java.lang.Object)</div><div class="line">    at Main.main(Main.java:18)</div><div class="line"></div><div class="line">&quot;VM Thread&quot; os_prio=31 tid=0x00007ff0f801f800 nid=0x3503 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#0 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f9003800 nid=0x2503 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#1 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f9004000 nid=0x2703 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#2 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f7801000 nid=0x2903 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#3 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f600e800 nid=0x2b03 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#4 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f600f000 nid=0x2d03 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#5 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f6010000 nid=0x2f03 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#6 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f6010800 nid=0x3103 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#7 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f6011000 nid=0x3303 runnable</div><div class="line"></div><div class="line">&quot;VM Periodic Task Thread&quot; os_prio=31 tid=0x00007ff0f980c000 nid=0x5803 waiting on condition</div><div class="line"></div><div class="line">JNI global references: 26</div><div class="line"></div><div class="line"></div><div class="line">Found one Java-level deadlock:</div><div class="line">=============================</div><div class="line">&quot;Thread-0&quot;:</div><div class="line">  waiting to lock monitor 0x00007ff0f8024f38 (object 0x000000076adb1a98, a java.lang.Object),</div><div class="line">  which is held by &quot;main&quot;</div><div class="line">&quot;main&quot;:</div><div class="line">  waiting to lock monitor 0x00007ff0f8023bf8 (object 0x000000076adb1a88, a java.lang.Object),</div><div class="line">  which is held by &quot;Thread-0&quot;</div><div class="line"></div><div class="line">Java stack information for the threads listed above:</div><div class="line">===================================================</div><div class="line">&quot;Thread-0&quot;:</div><div class="line">    at Main$1.run(Main.java:33)</div><div class="line">    - waiting to lock &lt;0x000000076adb1a98&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000076adb1a88&gt; (a java.lang.Object)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line">&quot;main&quot;:</div><div class="line">    at Main.test1(Main.java:52)</div><div class="line">    - waiting to lock &lt;0x000000076adb1a88&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000076adb1a98&gt; (a java.lang.Object)</div><div class="line">    at Main.main(Main.java:18)</div><div class="line"></div><div class="line">Found 1 deadlock.</div></pre></td></tr></table></figure></p>
+<p>jstack直接帮我们找出来了deadlock。真实场景下，如果代码比较复杂，可能需要我们自己分析找出死锁。<br>如果我们自己分析，该怎么找出死锁呢？重点分析java.lang.Thread.State: BLOCKED的进程，找到<br>waiting to lock，看看这个锁的持有者，是不是也被锁着，沿着这个链路找下去，是不是死锁就能找出来 了。比如上面的例子中,main线程持有0x000000076adb1a98锁，等待0x000000076adb1a88锁释放，而Thread-0持有0x000000076adb1a88锁，等待0x000000076adb1a98锁释放，两个线程互相等待，而进入死锁状态。</p>
+<h3 id="找出CPU消耗多的代码"><a href="#找出CPU消耗多的代码" class="headerlink" title="找出CPU消耗多的代码"></a>找出CPU消耗多的代码</h3><p>如果程序cpu占用很高，我们需要找到问题优化，可以配合top命令，找出最耗cpu的进程，从而找到相应代码解决问题。</p>
+<ul>
+<li><p>先用jps找出程序pid，这里是23034</p>
+</li>
+<li><p>用top命令找出该进程最耗cpu的线程。下面的top是linux中的，mac里的不一样。</p>
+<blockquote>
+<p><code>top -Hp 9711</code><br><img src="http://blog.magicpose.com/img/jstack-01.png" alt="top -Hp &lt;pid&gt;"></p>
+</blockquote>
+</li>
+<li><p>查看占用CPU较高的PID,并将其转化为16进制<br>因为top里的pid是10进制，而jstack里是16进制，叫nid。<br>可以用printf命令转换</p>
+<blockquote>
+<p><code>printf &quot;%x\n&quot; &lt;pid&gt;</code> 得到16进制PID</p>
+</blockquote>
+</li>
+<li><p>jstack出场</p>
+<blockquote>
+<p><code>jstack 23034 | grep 16进制PID</code> 查看并分析结果找出问题</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
+
+      
+        
+	<section id="comments" class="comment">
+		<!-- UY BEGIN -->
+		<div id="uyan_frame"></div>
+		<script type="text/javascript">
+			(function(){
+			  var dsq = document.createElement('script');
+			  dsq.type = 'text/javascript';
+			  dsq.async = true;
+			  dsq.src = "http://v2.uyan.cc/code/uyan.js?uid=2145478";
+			  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			}());
+		</script>
+		<!-- UY END -->
+	</section>
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/13/English/directory/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">专业名词解释 1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#找出代码中的死锁"><span class="nav-number">1.</span> <span class="nav-text">找出代码中的死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找出CPU消耗多的代码"><span class="nav-number">2.</span> <span class="nav-text">找出CPU消耗多的代码</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2017 Pivot&#39;s Blog All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+      var headerblur = document.getElementById("header-blur");
+      headerblur.style.minHeight = window.getComputedStyle(document.getElementById("allheader"), null).height;
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>

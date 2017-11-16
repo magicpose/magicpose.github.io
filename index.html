@@ -112,7 +112,7 @@
 	时间：2017-10-25
 	描述：width: 66%; 变更为 width: 100%;
 -->
-<article id="post-h2/directory"  class="article article-type-post" itemscope itemprop="blogPost" >
+<article id="post-jvm/reprint_jstack"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
@@ -120,7 +120,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/11/11/h2/directory/">H2 数据库安装</a>
+      <a class="article-title" href="/2017/11/16/jvm/reprint_jstack/">Java jstack 用法</a>
     </h1>
   
 
@@ -128,7 +128,132 @@
     
     <div class="article-meta">
       
-	<a href="/2017/11/11/h2/directory/" class="article-date">
+	<a href="/2017/11/16/jvm/reprint_jstack/" class="article-date">
+	  <time datetime="2017-11-16T03:56:13.318Z" itemprop="datePublished">十一月 16, 2017</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>jstack是jdk中自带的用于查看进程内线程栈的工具。当程序出现死锁时，我们可以通过jstack打印线程栈找到问题。</p>
+<h3 id="找出代码中的死锁"><a href="#找出代码中的死锁" class="headerlink" title="找出代码中的死锁"></a>找出代码中的死锁</h3><p>学习从一段简单的代码开始:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">public class Main &#123;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        test1();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void test1() &#123;</div><div class="line">        final Object lock1 = new Object();</div><div class="line">        final Object lock2 = new Object();</div><div class="line">        Thread thread=new Thread(new Runnable() &#123;</div><div class="line">            public void run() &#123;</div><div class="line">                synchronized (lock1) &#123;</div><div class="line">                    try &#123;</div><div class="line">                        for(int i=0;i&lt;20;i++) &#123;</div><div class="line">                            Thread.sleep(1000);</div><div class="line">                            System.out.println(Thread.currentThread().getName()+&quot; &quot;+i);</div><div class="line">                        &#125;</div><div class="line">                        synchronized (lock2) &#123;</div><div class="line">                            for(int i=20;i&lt;40;i++) &#123;</div><div class="line">                                Thread.sleep(1000);</div><div class="line">                                System.out.println(Thread.currentThread().getName()+&quot; &quot;+i);</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125; catch (InterruptedException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        thread.start();</div><div class="line">        synchronized (lock2) &#123;</div><div class="line">            try &#123;</div><div class="line">                for(int i=0;i&lt;20;i++) &#123;</div><div class="line">                    Thread.sleep(1000);</div><div class="line">                    System.out.println(Thread.currentThread().getName()+&quot; &quot;+i);</div><div class="line">                &#125;</div><div class="line">                synchronized (lock1) &#123;</div><div class="line">                    for(int i=20;i&lt;40;i++) &#123;</div><div class="line">                        Thread.sleep(1000);</div><div class="line">                        System.out.println(Thread.currentThread().getName()+&quot; &quot;+i);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>肉眼都能看出来的死锁，程序运行20s后进入死锁状态。<br>首先我们先找出这个程序的进程id,建议用jps,而不是ps,原因是jps只会显示当前用户下面的java进程，等于自动帮我们过滤了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">jps -l</div><div class="line"></div><div class="line">$ jps</div><div class="line">8896 Bootstrap</div><div class="line">3941 Bootstrap</div><div class="line">11718 Jps</div><div class="line">9711 Bootstrap</div></pre></td></tr></table></figure></p>
+<p>jstack 显示堆栈信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line">$ jstack 9711</div><div class="line"></div><div class="line">2017-05-23 13:57:22</div><div class="line">Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.45-b02 mixed mode):</div><div class="line"></div><div class="line">&quot;Attach Listener&quot; #12 daemon prio=9 os_prio=31 tid=0x00007ff0f780c800 nid=0x4507 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Thread-0&quot; #11 prio=5 os_prio=31 tid=0x00007ff0f80c0000 nid=0x5a03 waiting for monitor entry [0x0000700002310000]</div><div class="line">   java.lang.Thread.State: BLOCKED (on object monitor)</div><div class="line">    at Main$1.run(Main.java:33)</div><div class="line">    - waiting to lock &lt;0x000000076adb1a98&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000076adb1a88&gt; (a java.lang.Object)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line"></div><div class="line">&quot;Service Thread&quot; #10 daemon prio=9 os_prio=31 tid=0x00007ff0f980b800 nid=0x5603 runnable [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C1 CompilerThread3&quot; #9 daemon prio=9 os_prio=31 tid=0x00007ff0f6803000 nid=0x5403 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C2 CompilerThread2&quot; #8 daemon prio=9 os_prio=31 tid=0x00007ff0f6802800 nid=0x5203 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C2 CompilerThread1&quot; #7 daemon prio=9 os_prio=31 tid=0x00007ff0f6801800 nid=0x5003 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;C2 CompilerThread0&quot; #6 daemon prio=9 os_prio=31 tid=0x00007ff0f90de800 nid=0x4e03 waiting on condition [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Monitor Ctrl-Break&quot; #5 daemon prio=5 os_prio=31 tid=0x00007ff0f90dc800 nid=0x4c03 runnable [0x0000700001bfb000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line">    at java.net.SocketInputStream.socketRead0(Native Method)</div><div class="line">    at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)</div><div class="line">    at java.net.SocketInputStream.read(SocketInputStream.java:170)</div><div class="line">    at java.net.SocketInputStream.read(SocketInputStream.java:141)</div><div class="line">    at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:284)</div><div class="line">    at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)</div><div class="line">    at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)</div><div class="line">    - locked &lt;0x000000076af12b68&gt; (a java.io.InputStreamReader)</div><div class="line">    at java.io.InputStreamReader.read(InputStreamReader.java:184)</div><div class="line">    at java.io.BufferedReader.fill(BufferedReader.java:161)</div><div class="line">    at java.io.BufferedReader.readLine(BufferedReader.java:324)</div><div class="line">    - locked &lt;0x000000076af12b68&gt; (a java.io.InputStreamReader)</div><div class="line">    at java.io.BufferedReader.readLine(BufferedReader.java:389)</div><div class="line">    at com.intellij.rt.execution.application.AppMainV2$1.run(AppMainV2.java:64)</div><div class="line"></div><div class="line">&quot;Signal Dispatcher&quot; #4 daemon prio=9 os_prio=31 tid=0x00007ff0f8039800 nid=0x4a03 runnable [0x0000000000000000]</div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line"></div><div class="line">&quot;Finalizer&quot; #3 daemon prio=8 os_prio=31 tid=0x00007ff0f9803000 nid=0x3903 in Object.wait() [0x0000700001972000]</div><div class="line">   java.lang.Thread.State: WAITING (on object monitor)</div><div class="line">    at java.lang.Object.wait(Native Method)</div><div class="line">    - waiting on &lt;0x000000076ab06f58&gt; (a java.lang.ref.ReferenceQueue$Lock)</div><div class="line">    at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)</div><div class="line">    - locked &lt;0x000000076ab06f58&gt; (a java.lang.ref.ReferenceQueue$Lock)</div><div class="line">    at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)</div><div class="line">    at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)</div><div class="line"></div><div class="line">&quot;Reference Handler&quot; #2 daemon prio=10 os_prio=31 tid=0x00007ff0f9802000 nid=0x3703 in Object.wait() [0x000070000186f000]</div><div class="line">   java.lang.Thread.State: WAITING (on object monitor)</div><div class="line">    at java.lang.Object.wait(Native Method)</div><div class="line">    - waiting on &lt;0x000000076ab06998&gt; (a java.lang.ref.Reference$Lock)</div><div class="line">    at java.lang.Object.wait(Object.java:502)</div><div class="line">    at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:157)</div><div class="line">    - locked &lt;0x000000076ab06998&gt; (a java.lang.ref.Reference$Lock)</div><div class="line"></div><div class="line">&quot;main&quot; #1 prio=5 os_prio=31 tid=0x00007ff0f8002000 nid=0x1c03 waiting for monitor entry [0x0000700000e51000]</div><div class="line">   java.lang.Thread.State: BLOCKED (on object monitor)</div><div class="line">    at Main.test1(Main.java:52)</div><div class="line">    - waiting to lock &lt;0x000000076adb1a88&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000076adb1a98&gt; (a java.lang.Object)</div><div class="line">    at Main.main(Main.java:18)</div><div class="line"></div><div class="line">&quot;VM Thread&quot; os_prio=31 tid=0x00007ff0f801f800 nid=0x3503 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#0 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f9003800 nid=0x2503 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#1 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f9004000 nid=0x2703 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#2 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f7801000 nid=0x2903 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#3 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f600e800 nid=0x2b03 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#4 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f600f000 nid=0x2d03 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#5 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f6010000 nid=0x2f03 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#6 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f6010800 nid=0x3103 runnable</div><div class="line"></div><div class="line">&quot;GC task thread#7 (ParallelGC)&quot; os_prio=31 tid=0x00007ff0f6011000 nid=0x3303 runnable</div><div class="line"></div><div class="line">&quot;VM Periodic Task Thread&quot; os_prio=31 tid=0x00007ff0f980c000 nid=0x5803 waiting on condition</div><div class="line"></div><div class="line">JNI global references: 26</div><div class="line"></div><div class="line"></div><div class="line">Found one Java-level deadlock:</div><div class="line">=============================</div><div class="line">&quot;Thread-0&quot;:</div><div class="line">  waiting to lock monitor 0x00007ff0f8024f38 (object 0x000000076adb1a98, a java.lang.Object),</div><div class="line">  which is held by &quot;main&quot;</div><div class="line">&quot;main&quot;:</div><div class="line">  waiting to lock monitor 0x00007ff0f8023bf8 (object 0x000000076adb1a88, a java.lang.Object),</div><div class="line">  which is held by &quot;Thread-0&quot;</div><div class="line"></div><div class="line">Java stack information for the threads listed above:</div><div class="line">===================================================</div><div class="line">&quot;Thread-0&quot;:</div><div class="line">    at Main$1.run(Main.java:33)</div><div class="line">    - waiting to lock &lt;0x000000076adb1a98&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000076adb1a88&gt; (a java.lang.Object)</div><div class="line">    at java.lang.Thread.run(Thread.java:745)</div><div class="line">&quot;main&quot;:</div><div class="line">    at Main.test1(Main.java:52)</div><div class="line">    - waiting to lock &lt;0x000000076adb1a88&gt; (a java.lang.Object)</div><div class="line">    - locked &lt;0x000000076adb1a98&gt; (a java.lang.Object)</div><div class="line">    at Main.main(Main.java:18)</div><div class="line"></div><div class="line">Found 1 deadlock.</div></pre></td></tr></table></figure></p>
+<p>jstack直接帮我们找出来了deadlock。真实场景下，如果代码比较复杂，可能需要我们自己分析找出死锁。<br>如果我们自己分析，该怎么找出死锁呢？重点分析java.lang.Thread.State: BLOCKED的进程，找到<br>waiting to lock，看看这个锁的持有者，是不是也被锁着，沿着这个链路找下去，是不是死锁就能找出来 了。比如上面的例子中,main线程持有0x000000076adb1a98锁，等待0x000000076adb1a88锁释放，而Thread-0持有0x000000076adb1a88锁，等待0x000000076adb1a98锁释放，两个线程互相等待，而进入死锁状态。</p>
+<h3 id="找出CPU消耗多的代码"><a href="#找出CPU消耗多的代码" class="headerlink" title="找出CPU消耗多的代码"></a>找出CPU消耗多的代码</h3><p>如果程序cpu占用很高，我们需要找到问题优化，可以配合top命令，找出最耗cpu的进程，从而找到相应代码解决问题。</p>
+<ul>
+<li><p>先用jps找出程序pid，这里是23034</p>
+</li>
+<li><p>用top命令找出该进程最耗cpu的线程。下面的top是linux中的，mac里的不一样。</p>
+<blockquote>
+<p><code>top -Hp 9711</code><br><img src="http://blog.magicpose.com/img/jstack-01.png" alt="top -Hp &lt;pid&gt;"></p>
+</blockquote>
+</li>
+<li><p>查看占用CPU较高的PID,并将其转化为16进制<br>因为top里的pid是10进制，而jstack里是16进制，叫nid。<br>可以用printf命令转换</p>
+<blockquote>
+<p><code>printf &quot;%x\n&quot; &lt;pid&gt;</code> 得到16进制PID</p>
+</blockquote>
+</li>
+<li><p>jstack出场</p>
+<blockquote>
+<p><code>jstack 23034 | grep 16进制PID</code> 查看并分析结果找出问题</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <!--
+	作者：646759661@qq.com
+	时间：2017-10-25
+	描述：width: 66%; 变更为 width: 100%;
+-->
+<article id="post-English/directory"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/11/13/English/directory/">专业名词解释 1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/11/13/English/directory/" class="article-date">
+	  <time datetime="2017-11-13T03:16:25.043Z" itemprop="datePublished">十一月 13, 2017</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="网站访问量"><a href="#网站访问量" class="headerlink" title="网站访问量"></a>网站访问量</h2><p>DAU: Daily Active User  日活跃用户</p>
+<p>UV: Unique Visitor 独立游客</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/English/">English</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <!--
+	作者：646759661@qq.com
+	时间：2017-10-25
+	描述：width: 66%; 变更为 width: 100%;
+-->
+<article id="post-h2/install h2"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/11/11/h2/install h2/">H2 数据库安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/11/11/h2/install h2/" class="article-date">
 	  <time datetime="2017-11-11T10:00:11.484Z" itemprop="datePublished">十一月 11, 2017</time>
 	</a>
 
@@ -540,120 +665,6 @@
 <!-- Table of Contents -->
 
   
-    <!--
-	作者：646759661@qq.com
-	时间：2017-10-25
-	描述：width: 66%; 变更为 width: 100%;
--->
-<article id="post-hexo"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/09/20/hexo/">安装Hexo</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/09/20/hexo/" class="article-date">
-	  <time datetime="2017-09-20T11:25:32.829Z" itemprop="datePublished">九月 20, 2017</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="安装清单"><a href="#安装清单" class="headerlink" title="安装清单"></a>安装清单</h2><ul>
-<li>安装 node.js</li>
-<li>安装 git</li>
-<li>安装 hexo</li>
-</ul>
-<h4 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h4><p><a href="http://nodejs.org/" target="_blank" rel="external">Node.js</a> 一路安装即可,没什么需要注意的<br><code>cmd</code>-<code>npm -v</code> 查看安装结果</p>
-<h4 id="安装-git"><a href="#安装-git" class="headerlink" title="安装 git"></a>安装 git</h4><p>window下一般安装 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">msysgit</a> 一路安装即可</p>
-<h4 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h4><p>使用以下命令安装hexo到全局</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo</div></pre></td></tr></table></figure>
-<p>然后输入命令hexo -v输入hexo的版本号即为安装成功</p>
-<h2 id="发布部署"><a href="#发布部署" class="headerlink" title="发布部署"></a>发布部署</h2><h3 id="注意后面要生成公私钥完成部署"><a href="#注意后面要生成公私钥完成部署" class="headerlink" title="注意后面要生成公私钥完成部署"></a>注意后面要生成公私钥完成部署</h3><p>打开<code>git</code>命令行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">cd ~/.ssh</div><div class="line"># 依次输入保存目录,密码(可以一直为空,则默认保存在.ssh目录下,密码为空)</div><div class="line">$ ssh-keygen -t rsa -C &quot;your_email@your_email.com&quot;</div><div class="line"># 在命令行copy密钥内容到剪贴板</div><div class="line">$ clip &lt; ~/.ssh/id_rsa.pub</div><div class="line"></div><div class="line"># 打开github,设置密钥</div><div class="line">Setting &gt; SSH and GPG keys &gt; New SSH key &gt; 黏贴密钥信息</div><div class="line"></div><div class="line"># git 命令行测试</div><div class="line">$ ssh -T git@github.com</div><div class="line"># 输出如下信息表示配置成功</div><div class="line">The authenticity of host &apos;github.com (192.30.255.112)&apos; can&apos;t be established.</div><div class="line">RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Warning: Permanently added &apos;github.com,192.30.255.112&apos; (RSA) to the list of known hosts.</div><div class="line">Hi magicpose! You&apos;ve successfully authenticated, but GitHub does not provide shell access.</div></pre></td></tr></table></figure></p>
-<h3 id="别忘记CNAME文件"><a href="#别忘记CNAME文件" class="headerlink" title="别忘记CNAME文件"></a>别忘记<code>CNAME</code>文件</h3><p>如果使用的是自己的域名,比如<code>blog.magicpose.com</code>,一定要在<code>source</code>目录下创建<code>CNAME</code>文件且加入一行内容:<code>blog.magicpose.com</code></p>
-<h2 id="常用命令介绍"><a href="#常用命令介绍" class="headerlink" title="常用命令介绍"></a>常用命令介绍</h2><h4 id="Hexo命令"><a href="#Hexo命令" class="headerlink" title="Hexo命令"></a>Hexo命令</h4><p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">Hexo官方文档</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ hexo new(n)    //写文章</div><div class="line">$ hexo generate(g)    //把文章生成页面</div><div class="line">$ hexo server(s)    //启动本地服务调试</div><div class="line">$ hexo deploy(d)    //部署到github 可与hexo g合并为 hexo d -g</div></pre></td></tr></table></figure></p>
-<p><a href="http://blog.csdn.net/scythe666/article/details/51956821" target="_blank" rel="external">参考资料 : hexo VS jekyll</a></p>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <!--
-	作者：646759661@qq.com
-	时间：2017-10-25
-	描述：width: 66%; 变更为 width: 100%;
--->
-<article id="post-Jenkins"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/09/20/Jenkins/">Publish Over SSH Plugin 配置说明</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/09/20/Jenkins/" class="article-date">
-	  <time datetime="2017-09-20T09:55:16.289Z" itemprop="datePublished">九月 20, 2017</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>该插件可配合在编译中或编译后将编译结果发送的远程主机,并执行脚本</p>
-<h2 id="1-服务器配置"><a href="#1-服务器配置" class="headerlink" title="1, 服务器配置"></a>1, 服务器配置</h2><blockquote>
-<p>jenkins/系统管理/系统配置/Publish over SSH<br>添加<code>SSH Server</code>,按照主机信息依次配置即可<br><strong>重点:</strong> 切记 <code>Remote Directory</code> 应该配置为所选登录用户可读写的目录</p>
-</blockquote>
-<h2 id="2-项目配置"><a href="#2-项目配置" class="headerlink" title="2, 项目配置"></a>2, 项目配置</h2><blockquote>
-<p>打开项目配置 设置<code>Send files or execute commands over SSH</code>   </p>
-</blockquote>
-<p><code>Transfer Set</code>属性:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Source files: target//*zip       #要传输的文件,从项目工作目录开始</div><div class="line">Remove prefix: target/           #去掉前缀目录,只传输文件</div><div class="line">Remote directory: develop/$&#123;JOB_NAME&#125;/build-$&#123;BUILD_NUMBER&#125;  #远程目录,特别注意此目录以上一步配置的&quot;SSH Server - Remote Directory&quot; 为根目录</div><div class="line">#可以使用jinkins内置属性,时间格式.具体看配置处的说明</div><div class="line">Exec command: /mnt/hard1/server/script/hello.sh 执行远程shell脚本路径</div></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
 
 
   <nav id="page-nav">
@@ -764,7 +775,31 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
-              <h6 style="margin: 0;"><a href="/2017/11/11/h2/directory/">H2 数据库安装</a></h6>
+              <h6 style="margin: 0;"><a href="/2017/11/16/jvm/reprint_jstack/">Java jstack 用法</a></h6>
+              <span>十一月 16, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2017/11/13/English/directory/">专业名词解释 1</a></h6>
+              <span>十一月 13, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2017/11/11/h2/install h2/">H2 数据库安装</a></h6>
               <span>十一月 11, 2017</span>
             </div>
 
@@ -806,30 +841,6 @@
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/10/01/mysql_datetime_count/">MYSQL按时间统计</a></h6>
-              <span>十月 1, 2017</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/09/26/redis-info/">redis-cli 查看redis性能信息</a></h6>
-              <span>九月 26, 2017</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -849,7 +860,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitBook/">GitBook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eat/">eat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/economic/">economic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edaw/">edaw</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/h2/">h2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uec/">uec</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/English/">English</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitBook/">GitBook</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eat/">eat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/economic/">economic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edaw/">edaw</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/h2/">h2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/uec/">uec</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -859,7 +870,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/GitBook/" style="font-size: 10px;">GitBook</a> <a href="/tags/eat/" style="font-size: 10px;">eat</a> <a href="/tags/economic/" style="font-size: 10px;">economic</a> <a href="/tags/edaw/" style="font-size: 10px;">edaw</a> <a href="/tags/h2/" style="font-size: 10px;">h2</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/uec/" style="font-size: 10px;">uec</a>
+      <a href="/tags/English/" style="font-size: 10px;">English</a> <a href="/tags/GitBook/" style="font-size: 10px;">GitBook</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/eat/" style="font-size: 10px;">eat</a> <a href="/tags/economic/" style="font-size: 10px;">economic</a> <a href="/tags/edaw/" style="font-size: 10px;">edaw</a> <a href="/tags/h2/" style="font-size: 10px;">h2</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/uec/" style="font-size: 10px;">uec</a>
     </div>
   </div>
 
@@ -869,7 +880,7 @@
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -924,6 +935,9 @@
 
 
     <!-- headerblur min height -->
+    
+      var headerblur = document.getElementById("header-blur");
+      headerblur.style.minHeight = window.getComputedStyle(document.getElementById("allheader"), null).height;
     
     
 </script>

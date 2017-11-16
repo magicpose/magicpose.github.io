@@ -3,23 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Publish Over SSH Plugin 配置说明 | Pivot&#39;s Blog</title>
+  <title>专业名词解释 1 | Pivot&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="English" />
   
   
   
-  <meta name="description" content="说明该插件可配合在编译中或编译后将编译结果发送的远程主机,并执行脚本 1, 服务器配置 jenkins/系统管理/系统配置/Publish over SSH添加SSH Server,按照主机信息依次配置即可重点: 切记 Remote Directory 应该配置为所选登录用户可读写的目录  2, 项目配置 打开项目配置 设置Send files or execute commands over S">
+  
+  <meta name="description" content="网站访问量DAU: Daily Active User  日活跃用户 UV: Unique Visitor 独立游客">
+<meta name="keywords" content="English">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Publish Over SSH Plugin 配置说明">
-<meta property="og:url" content="http://blog.magicpose.com/2017/09/20/Jenkins/index.html">
+<meta property="og:title" content="专业名词解释 1">
+<meta property="og:url" content="http://blog.magicpose.com/2017/11/13/English/directory/index.html">
 <meta property="og:site_name" content="Pivot&#39;s Blog">
-<meta property="og:description" content="说明该插件可配合在编译中或编译后将编译结果发送的远程主机,并执行脚本 1, 服务器配置 jenkins/系统管理/系统配置/Publish over SSH添加SSH Server,按照主机信息依次配置即可重点: 切记 Remote Directory 应该配置为所选登录用户可读写的目录  2, 项目配置 打开项目配置 设置Send files or execute commands over S">
+<meta property="og:description" content="网站访问量DAU: Daily Active User  日活跃用户 UV: Unique Visitor 独立游客">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-21T12:51:27.847Z">
+<meta property="og:updated_time" content="2017-11-13T03:17:34.607Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Publish Over SSH Plugin 配置说明">
-<meta name="twitter:description" content="说明该插件可配合在编译中或编译后将编译结果发送的远程主机,并执行脚本 1, 服务器配置 jenkins/系统管理/系统配置/Publish over SSH添加SSH Server,按照主机信息依次配置即可重点: 切记 Remote Directory 应该配置为所选登录用户可读写的目录  2, 项目配置 打开项目配置 设置Send files or execute commands over S">
+<meta name="twitter:title" content="专业名词解释 1">
+<meta name="twitter:description" content="网站访问量DAU: Daily Active User  日活跃用户 UV: Unique Visitor 独立游客">
   
     <link rel="alternate" href="/atom.xml" title="Pivot&#39;s Blog" type="application/atom+xml">
   
@@ -111,7 +114,7 @@
 	时间：2017-10-25
 	描述：width: 66%; 变更为 width: 100%;
 -->
-<article id="post-Jenkins" style="width: 100%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+<article id="post-English/directory" style="width: 100%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
     
@@ -119,7 +122,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      Publish Over SSH Plugin 配置说明
+      专业名词解释 1
     </h1>
   
 
@@ -127,8 +130,8 @@
     
     <div class="article-meta">
       
-	<a href="/2017/09/20/Jenkins/" class="article-date">
-	  <time datetime="2017-09-20T09:55:16.289Z" itemprop="datePublished">九月 20, 2017</time>
+	<a href="/2017/11/13/English/directory/" class="article-date">
+	  <time datetime="2017-11-13T03:16:25.043Z" itemprop="datePublished">十一月 13, 2017</time>
 	</a>
 
        
@@ -140,20 +143,17 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>该插件可配合在编译中或编译后将编译结果发送的远程主机,并执行脚本</p>
-<h2 id="1-服务器配置"><a href="#1-服务器配置" class="headerlink" title="1, 服务器配置"></a>1, 服务器配置</h2><blockquote>
-<p>jenkins/系统管理/系统配置/Publish over SSH<br>添加<code>SSH Server</code>,按照主机信息依次配置即可<br><strong>重点:</strong> 切记 <code>Remote Directory</code> 应该配置为所选登录用户可读写的目录</p>
-</blockquote>
-<h2 id="2-项目配置"><a href="#2-项目配置" class="headerlink" title="2, 项目配置"></a>2, 项目配置</h2><blockquote>
-<p>打开项目配置 设置<code>Send files or execute commands over SSH</code>   </p>
-</blockquote>
-<p><code>Transfer Set</code>属性:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Source files: target//*zip       #要传输的文件,从项目工作目录开始</div><div class="line">Remove prefix: target/           #去掉前缀目录,只传输文件</div><div class="line">Remote directory: develop/$&#123;JOB_NAME&#125;/build-$&#123;BUILD_NUMBER&#125;  #远程目录,特别注意此目录以上一步配置的&quot;SSH Server - Remote Directory&quot; 为根目录</div><div class="line">#可以使用jinkins内置属性,时间格式.具体看配置处的说明</div><div class="line">Exec command: /mnt/hard1/server/script/hello.sh 执行远程shell脚本路径</div></pre></td></tr></table></figure></p>
+        <h2 id="网站访问量"><a href="#网站访问量" class="headerlink" title="网站访问量"></a>网站访问量</h2><p>DAU: Daily Active User  日活跃用户</p>
+<p>UV: Unique Visitor 独立游客</p>
 
       
     </div>
     <footer class="entry-meta entry-footer">
       
       
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/English/">English</a></li></ul>
+
       
         
 	<section id="comments" class="comment">
@@ -180,19 +180,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/09/20/hexo/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/11/16/jvm/reprint_jstack/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          安装Hexo
+          Java jstack 用法
         
       </div>
     </a>
   
   
-    <a href="/2017/09/20/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/11/11/h2/install h2/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">H2 数据库安装</div>
     </a>
   
 </nav>
@@ -206,7 +206,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-服务器配置"><span class="nav-number">2.</span> <span class="nav-text">1, 服务器配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-项目配置"><span class="nav-number">3.</span> <span class="nav-text">2, 项目配置</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网站访问量"><span class="nav-number">1.</span> <span class="nav-text">网站访问量</span></a></li></ol>
     
     </div>
   </aside>
