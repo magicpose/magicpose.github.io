@@ -1277,6 +1277,11 @@ ul.widget-tab-nav {
 	.site-extra .widget-area {
 		width: 50%;
 		}
+	.outer {
+	    max-width: 90%;
+	    margin: 40px auto;
+	    padding: 0 0px;
+	}
 	}
 @media screen and (max-width: 758px) {
 	.site-header .widget-area {
