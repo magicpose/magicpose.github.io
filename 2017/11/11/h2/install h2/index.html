@@ -11,20 +11,20 @@
   
   
   
-  <meta name="description" content="安装H2官方站点 安装JAVA环境,设置JAVA_HOME,CLASSPATH下载安装不多说12345678910# linux下设置java环境变量vim /etc/profileexport JAVA_HOME=/opt/java/jdk1.8.0_151export JAVA_BIN=$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar">
+  <meta name="description" content="安装H2官方站点">
 <meta name="keywords" content="h2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="H2 数据库安装">
 <meta property="og:url" content="http://blog.magicpose.com/2017/11/11/h2/install h2/index.html">
 <meta property="og:site_name" content="Pivot&#39;s Blog">
-<meta property="og:description" content="安装H2官方站点 安装JAVA环境,设置JAVA_HOME,CLASSPATH下载安装不多说12345678910# linux下设置java环境变量vim /etc/profileexport JAVA_HOME=/opt/java/jdk1.8.0_151export JAVA_BIN=$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar">
+<meta property="og:description" content="安装H2官方站点">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.magicpose.com/img/h2/h2-01.png">
 <meta property="og:image" content="http://blog.magicpose.com/img/h2/h2-02.png">
-<meta property="og:updated_time" content="2017-11-11T10:29:40.060Z">
+<meta property="og:updated_time" content="2017-11-18T02:55:39.105Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="H2 数据库安装">
-<meta name="twitter:description" content="安装H2官方站点 安装JAVA环境,设置JAVA_HOME,CLASSPATH下载安装不多说12345678910# linux下设置java环境变量vim /etc/profileexport JAVA_HOME=/opt/java/jdk1.8.0_151export JAVA_BIN=$JAVA_HOME/binexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar">
+<meta name="twitter:description" content="安装H2官方站点">
 <meta name="twitter:image" content="http://blog.magicpose.com/img/h2/h2-01.png">
   
     <link rel="alternate" href="/atom.xml" title="Pivot&#39;s Blog" type="application/atom+xml">
@@ -146,7 +146,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a href="http://www.h2database.com" target="_blank" rel="external">H2官方站点</a></p>
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a href="http://www.h2database.com" target="_blank" rel="external">H2官方站点</a><br><a id="more"></a></p>
 <h3 id="安装JAVA环境-设置JAVA-HOME-CLASSPATH"><a href="#安装JAVA环境-设置JAVA-HOME-CLASSPATH" class="headerlink" title="安装JAVA环境,设置JAVA_HOME,CLASSPATH"></a>安装JAVA环境,设置JAVA_HOME,CLASSPATH</h3><p>下载安装不多说<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># linux下设置java环境变量</span></div><div class="line">vim /etc/profile</div><div class="line"></div><div class="line"><span class="built_in">export</span> JAVA_HOME=/opt/java/jdk1.8.0_151</div><div class="line"><span class="built_in">export</span> JAVA_BIN=<span class="variable">$JAVA_HOME</span>/bin</div><div class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"></div><div class="line"><span class="comment"># 使设置生效</span></div><div class="line"><span class="built_in">source</span> /etc/profile</div></pre></td></tr></table></figure></p>
 <h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>下载H2压缩包,解压,进入目录,<code>build.bat</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd bin</div><div class="line"># 运行 h2.bat</div><div class="line">h2.bat</div></pre></td></tr></table></figure></p>
 <h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>下载H2压缩包,解压,进入目录,<code>./build.sh</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd bin</div><div class="line"># 运行 h2.sh &amp;</div><div class="line">./h2.sh &amp;</div></pre></td></tr></table></figure></p>
