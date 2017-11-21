@@ -11,19 +11,19 @@
   
   
   
-  <meta name="description" content="常用的导出JVM堆信息的方法">
+  <meta name="description" content="导出JVM堆信息的方法">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java jstack 用法">
 <meta property="og:url" content="http://blog.magicpose.com/2017/11/16/jvm/reprint_jstack/index.html">
 <meta property="og:site_name" content="Pivot&#39;s Blog">
-<meta property="og:description" content="常用的导出JVM堆信息的方法">
+<meta property="og:description" content="导出JVM堆信息的方法">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.magicpose.com/img/jstack-01.png">
-<meta property="og:updated_time" content="2017-11-21T03:04:44.694Z">
+<meta property="og:updated_time" content="2017-11-21T03:09:29.553Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java jstack 用法">
-<meta name="twitter:description" content="常用的导出JVM堆信息的方法">
+<meta name="twitter:description" content="导出JVM堆信息的方法">
 <meta name="twitter:image" content="http://blog.magicpose.com/img/jstack-01.png">
   
     <link rel="alternate" href="/atom.xml" title="Pivot&#39;s Blog" type="application/atom+xml">
@@ -145,8 +145,8 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="常用的导出JVM堆信息的方法"><a href="#常用的导出JVM堆信息的方法" class="headerlink" title="常用的导出JVM堆信息的方法"></a>常用的导出JVM堆信息的方法</h2><a id="more"></a> 
-<h4 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h4><blockquote>
+        <h2 id="导出JVM堆信息的方法"><a href="#导出JVM堆信息的方法" class="headerlink" title="导出JVM堆信息的方法"></a>导出JVM堆信息的方法</h2><a id="more"></a> 
+<h3 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h3><blockquote>
 <p>jstack<br>‘jstack’ is an effective command line tool to capture thread dumps. jstack tool is shipped in JDK_HOMEbin folder. Here is the command that you need to issue to capture thread dump:</p>
 <p><code>jstack -l  &lt;pid&gt; &gt; &lt;file-path&gt;</code>  </p>
 <p>where<br>pid: is the Process Id of the application, whose thread dump should be captured</p>
@@ -155,7 +155,7 @@
 <p>As per the example thread dump of the process would be generated in /opt/tmp/threadDump.txt file.</p>
 <p>Jstack tool is included in JDK since Java 5. If you are running in older version of java, consider using other options</p>
 </blockquote>
-<h4 id="jcmd"><a href="#jcmd" class="headerlink" title="jcmd"></a>jcmd</h4><blockquote>
+<h3 id="jcmd"><a href="#jcmd" class="headerlink" title="jcmd"></a>jcmd</h3><blockquote>
 <p>The jcmd tool was introduced with Oracle’s Java 7. It’s useful in troubleshooting issues with JVM applications. It has various capabilities such as identifying java process Ids, acquiring heap dumps, acquiring thread dumps, acquiring garbage collection statistics, ….</p>
 <p>Using the below JCMD command you can generate thread dump:</p>
 <p><code>jcmd &lt;pid&gt; Thread.print &gt; &lt;file-path&gt;</code><br>where<br>pid: is the Process Id of the application, whose thread dump should be captured<br>file-path: is the file path where thread dump will be written in to.</p>
@@ -239,7 +239,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的导出JVM堆信息的方法"><span class="nav-number">1.</span> <span class="nav-text">常用的导出JVM堆信息的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#jstack"><span class="nav-number">1.0.1.</span> <span class="nav-text">jstack</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jcmd"><span class="nav-number">1.0.2.</span> <span class="nav-text">jcmd</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际使用分析"><span class="nav-number">2.</span> <span class="nav-text">实际使用分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#找出代码中的死锁"><span class="nav-number">2.1.</span> <span class="nav-text">找出代码中的死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找出CPU消耗多的代码"><span class="nav-number">2.2.</span> <span class="nav-text">找出CPU消耗多的代码</span></a></li></ol></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导出JVM堆信息的方法"><span class="nav-number">1.</span> <span class="nav-text">导出JVM堆信息的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jstack"><span class="nav-number">1.1.</span> <span class="nav-text">jstack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jcmd"><span class="nav-number">1.2.</span> <span class="nav-text">jcmd</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际使用分析"><span class="nav-number">2.</span> <span class="nav-text">实际使用分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#找出代码中的死锁"><span class="nav-number">2.1.</span> <span class="nav-text">找出代码中的死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找出CPU消耗多的代码"><span class="nav-number">2.2.</span> <span class="nav-text">找出CPU消耗多的代码</span></a></li></ol></li></ol>
     
     </div>
   </aside>
