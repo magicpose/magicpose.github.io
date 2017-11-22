@@ -112,6 +112,69 @@
 	时间：2017-10-25
 	描述：width: 66%; 变更为 width: 100%;
 -->
+<article id="post-h2/install h2"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/11/22/h2/install h2/">H2 数据库安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/11/22/h2/install h2/" class="article-date">
+	  <time datetime="2017-11-22T03:22:16.429Z" itemprop="datePublished">十一月 22, 2017</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+
+          
+            <div class="entry-thumbnail">
+              <a href="/2017/11/22/h2/install h2/"><img src="http://lorempixel.com/750/450/city/3" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
+            </div>
+          
+          <div class="entry-summary">
+          安装H2官方站点
+
+        
+          <p class="article-more-link">
+            <a href="/2017/11/22/h2/install h2/#more">阅读全文</a>
+          </p>
+        </div>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/h2/">h2</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <!--
+	作者：646759661@qq.com
+	时间：2017-10-25
+	描述：width: 66%; 变更为 width: 100%;
+-->
 <article id="post-jvm/reprint_jstack"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -141,7 +204,7 @@
 
           
             <div class="entry-thumbnail">
-              <a href="/2017/11/16/jvm/reprint_jstack/"><img src="http://lorempixel.com/750/450/city/6" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
+              <a href="/2017/11/16/jvm/reprint_jstack/"><img src="http://lorempixel.com/750/450/city/1" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
             </div>
           
           <div class="entry-summary">
@@ -251,71 +314,19 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="常用基本命令"><a href="#常用基本命令" class="headerlink" title="常用基本命令"></a>常用基本命令</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">exists</span> MINE;  </div><div class="line"></div><div class="line">## 创建表</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> mine (  </div><div class="line"> <span class="keyword">id</span> <span class="built_in">int</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT ,  </div><div class="line"> <span class="keyword">desc</span> <span class="built_in">varchar</span>(<span class="number">32</span>) ,  </div><div class="line"> vala <span class="built_in">varchar</span>(<span class="number">32</span>) ,  </div><div class="line"> valb <span class="built_in">varchar</span>(<span class="number">32</span>)  ,  </div><div class="line"> valc <span class="built_in">varchar</span>(<span class="number">32</span>)  ,  </div><div class="line"> vald <span class="built_in">varchar</span>(<span class="number">32</span>)  ,  </div><div class="line"> vale <span class="built_in">varchar</span>(<span class="number">32</span>)  </div><div class="line">); </div><div class="line"></div><div class="line">## 添加字段</div><div class="line"><span class="keyword">alter</span> <span class="keyword">table</span> MINE <span class="keyword">add</span>  userName <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">AFTER</span> <span class="keyword">id</span>;</div><div class="line"></div><div class="line">## 删除字段</div><div class="line"><span class="keyword">alter</span> <span class="keyword">table</span> mine <span class="keyword">drop</span> <span class="keyword">COLUMN</span> answer;</div><div class="line"></div><div class="line"># 设置列默认值</div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> MYCLOUD <span class="keyword">ALTER</span> <span class="keyword">COLUMN</span> <span class="keyword">ID</span> <span class="keyword">set</span> <span class="keyword">not</span> <span class="literal">null</span> ;</div><div class="line"></div><div class="line"># 设置主键</div><div class="line"><span class="keyword">CREATE</span> PRIMARY <span class="keyword">KEY</span> <span class="string">"PRIMARY_KEY_MYCLOUD_ID "</span><span class="keyword">ON</span> MYCLOUD ( <span class="keyword">ID</span> ) ;</div></pre></td></tr></table></figure>
-<p>注意使用 <code>create table a as select * from b</code> 创建的表,可能没有主键,无法编辑数据,需要设置主键</p>
-<h2 id="SQL语法"><a href="#SQL语法" class="headerlink" title="SQL语法"></a>SQL语法</h2><p>基本和My算起来语法相同,如果有问题,可以开启自动提示<br><img src="http://blog.magicpose.com/img/h2/h2-03.png" alt="H2管理自定义设置界面"></p>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/h2/">h2</a></li></ul>
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <!--
-	作者：646759661@qq.com
-	时间：2017-10-25
-	描述：width: 66%; 变更为 width: 100%;
--->
-<article id="post-h2/install h2"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/11/11/h2/install h2/">H2 数据库安装</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/11/11/h2/install h2/" class="article-date">
-	  <time datetime="2017-11-11T10:00:11.484Z" itemprop="datePublished">十一月 11, 2017</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
         
 
           
             <div class="entry-thumbnail">
-              <a href="/2017/11/11/h2/install h2/"><img src="http://lorempixel.com/750/450/city/2" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
+              <a href="/2017/11/11/h2/h2 command/"><img src="http://lorempixel.com/750/450/city/10" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
             </div>
           
           <div class="entry-summary">
-          安装H2官方站点
+          SQL语法基本和My算起来语法相同,如果有问题,可以开启自动提示
 
         
           <p class="article-more-link">
-            <a href="/2017/11/11/h2/install h2/#more">阅读全文</a>
+            <a href="/2017/11/11/h2/h2 command/#more">阅读全文</a>
           </p>
         </div>
       
@@ -765,6 +776,18 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2017/11/22/h2/install h2/">H2 数据库安装</a></h6>
+              <span>十一月 22, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2017/11/16/jvm/reprint_jstack/">Java jstack 用法</a></h6>
               <span>十一月 16, 2017</span>
             </div>
@@ -790,18 +813,6 @@
             
 
               <h6 style="margin: 0;"><a href="/2017/11/11/h2/h2 command/">H2 数据库常用基本命令</a></h6>
-              <span>十一月 11, 2017</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/11/11/h2/install h2/">H2 数据库安装</a></h6>
               <span>十一月 11, 2017</span>
             </div>
 
