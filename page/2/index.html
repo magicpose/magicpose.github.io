@@ -194,21 +194,25 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="安装清单"><a href="#安装清单" class="headerlink" title="安装清单"></a>安装清单</h2><ul>
-<li>安装 node.js</li>
-<li>安装 git</li>
-<li>安装 hexo</li>
-</ul>
-<h4 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h4><p><a href="http://nodejs.org/" target="_blank" rel="external">Node.js</a> 一路安装即可,没什么需要注意的<br><code>cmd</code>-<code>npm -v</code> 查看安装结果</p>
-<h4 id="安装-git"><a href="#安装-git" class="headerlink" title="安装 git"></a>安装 git</h4><p>window下一般安装 <a href="https://git-for-windows.github.io/" target="_blank" rel="external">msysgit</a> 一路安装即可</p>
-<h4 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h4><p>使用以下命令安装hexo到全局</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo</div></pre></td></tr></table></figure>
-<p>然后输入命令hexo -v输入hexo的版本号即为安装成功</p>
-<h2 id="发布部署"><a href="#发布部署" class="headerlink" title="发布部署"></a>发布部署</h2><h3 id="注意后面要生成公私钥完成部署"><a href="#注意后面要生成公私钥完成部署" class="headerlink" title="注意后面要生成公私钥完成部署"></a>注意后面要生成公私钥完成部署</h3><p>打开<code>git</code>命令行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">cd ~/.ssh</div><div class="line"># 依次输入保存目录,密码(可以一直为空,则默认保存在.ssh目录下,密码为空)</div><div class="line">$ ssh-keygen -t rsa -C &quot;your_email@your_email.com&quot;</div><div class="line"># 在命令行copy密钥内容到剪贴板</div><div class="line">$ clip &lt; ~/.ssh/id_rsa.pub</div><div class="line"></div><div class="line"># 打开github,设置密钥</div><div class="line">Setting &gt; SSH and GPG keys &gt; New SSH key &gt; 黏贴密钥信息</div><div class="line"></div><div class="line"># git 命令行测试</div><div class="line">$ ssh -T git@github.com</div><div class="line"># 输出如下信息表示配置成功</div><div class="line">The authenticity of host &apos;github.com (192.30.255.112)&apos; can&apos;t be established.</div><div class="line">RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">Warning: Permanently added &apos;github.com,192.30.255.112&apos; (RSA) to the list of known hosts.</div><div class="line">Hi magicpose! You&apos;ve successfully authenticated, but GitHub does not provide shell access.</div></pre></td></tr></table></figure></p>
-<h3 id="别忘记CNAME文件"><a href="#别忘记CNAME文件" class="headerlink" title="别忘记CNAME文件"></a>别忘记<code>CNAME</code>文件</h3><p>如果使用的是自己的域名,比如<code>blog.magicpose.com</code>,一定要在<code>source</code>目录下创建<code>CNAME</code>文件且加入一行内容:<code>blog.magicpose.com</code></p>
-<h2 id="常用命令介绍"><a href="#常用命令介绍" class="headerlink" title="常用命令介绍"></a>常用命令介绍</h2><h4 id="Hexo命令"><a href="#Hexo命令" class="headerlink" title="Hexo命令"></a>Hexo命令</h4><p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">Hexo官方文档</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ hexo new(n)    //写文章</div><div class="line">$ hexo generate(g)    //把文章生成页面</div><div class="line">$ hexo server(s)    //启动本地服务调试</div><div class="line">$ hexo deploy(d)    //部署到github 可与hexo g合并为 hexo d -g</div></pre></td></tr></table></figure></p>
-<p><a href="http://blog.csdn.net/scythe666/article/details/51956821" target="_blank" rel="external">参考资料 : hexo VS jekyll</a></p>
+        
 
+          
+            <div class="entry-thumbnail">
+              <a href="/2017/09/20/hexo/"><img src="http://lorempixel.com/750/450/city/5" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
+            </div>
+          
+          <div class="entry-summary">
+          安装清单
+安装 node.js
+安装 git
+安装 hexo
+
+
+        
+          <p class="article-more-link">
+            <a href="/2017/09/20/hexo/#more">阅读全文</a>
+          </p>
+        </div>
       
     </div>
     <footer class="entry-meta entry-footer">
@@ -254,15 +258,21 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>该插件可配合在编译中或编译后将编译结果发送的远程主机,并执行脚本</p>
-<h2 id="1-服务器配置"><a href="#1-服务器配置" class="headerlink" title="1, 服务器配置"></a>1, 服务器配置</h2><blockquote>
-<p>jenkins/系统管理/系统配置/Publish over SSH<br>添加<code>SSH Server</code>,按照主机信息依次配置即可<br><strong>重点:</strong> 切记 <code>Remote Directory</code> 应该配置为所选登录用户可读写的目录</p>
-</blockquote>
-<h2 id="2-项目配置"><a href="#2-项目配置" class="headerlink" title="2, 项目配置"></a>2, 项目配置</h2><blockquote>
-<p>打开项目配置 设置<code>Send files or execute commands over SSH</code>   </p>
-</blockquote>
-<p><code>Transfer Set</code>属性:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Source files: target//*zip       #要传输的文件,从项目工作目录开始</div><div class="line">Remove prefix: target/           #去掉前缀目录,只传输文件</div><div class="line">Remote directory: develop/$&#123;JOB_NAME&#125;/build-$&#123;BUILD_NUMBER&#125;  #远程目录,特别注意此目录以上一步配置的&quot;SSH Server - Remote Directory&quot; 为根目录</div><div class="line">#可以使用jinkins内置属性,时间格式.具体看配置处的说明</div><div class="line">Exec command: /mnt/hard1/server/script/hello.sh 执行远程shell脚本路径</div></pre></td></tr></table></figure></p>
+        
 
+          
+            <div class="entry-thumbnail">
+              <a href="/2017/09/20/Jenkins/"><img src="http://lorempixel.com/750/450/city/8" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
+            </div>
+          
+          <div class="entry-summary">
+          说明该插件可配合在编译中或编译后将编译结果发送的远程主机,并执行脚本
+
+        
+          <p class="article-more-link">
+            <a href="/2017/09/20/Jenkins/#more">阅读全文</a>
+          </p>
+        </div>
       
     </div>
     <footer class="entry-meta entry-footer">
