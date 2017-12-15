@@ -211,7 +211,7 @@
 
     
         <a href="/2017/11/22/h2/h2_install/" class="post-more waves-effect waves-button">
-            more...
+            继续阅读...
         </a>
     </div>
     
@@ -295,7 +295,7 @@
 <h3 id="找出代码中的死锁"><a href="#找出代码中的死锁" class="headerlink" title="找出代码中的死锁"></a>找出代码中的死锁</h3><p>学习从一段简单的代码开始:<br>
     
         <a href="/2017/11/16/jvm/reprint_jstack/" class="post-more waves-effect waves-button">
-            more...
+            继续阅读...
         </a>
     </div>
     
@@ -362,7 +362,7 @@
 <h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="字符集排序规则命名"><a href="#字符集排序规则命名" class="headerlink" title="字符集排序规则命名"></a>字符集排序规则命名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># _ci结尾表示忽略大小写</div><div class="line">ci : case insensitive [ɪn&apos;sensətɪv]</div><div class="line"># _cs结尾表示不忽略大小写</div><div class="line">cs : case sensitive [&apos;sensətɪv]</div><div class="line"># _bin表示二进制比较</div><div class="line">bin : binary[&apos;baɪnəri]</div><div class="line"></div><div class="line"></div><div class="line">SHOW COLLATION LIKE &apos;gbk%&apos;;</div></pre></td></tr></table></figure>
     
         <a href="/2017/11/13/english/expertise/" class="post-more waves-effect waves-button">
-            more...
+            继续阅读...
         </a>
     </div>
     
@@ -435,7 +435,7 @@
 
     
         <a href="/2017/11/11/h2/h2_command/" class="post-more waves-effect waves-button">
-            more...
+            继续阅读...
         </a>
     </div>
     
@@ -502,7 +502,7 @@
 
     
         <a href="/2017/11/10/gitbook/view/" class="post-more waves-effect waves-button">
-            more...
+            继续阅读...
         </a>
     </div>
     
@@ -571,7 +571,7 @@
 
     
         <a href="/2017/10/25/eat/menu/" class="post-more waves-effect waves-button">
-            more...
+            继续阅读...
         </a>
     </div>
     
@@ -652,7 +652,7 @@
 
     
         <a href="/2017/10/25/life/economic/" class="post-more waves-effect waves-button">
-            more...
+            继续阅读...
         </a>
     </div>
     
@@ -721,7 +721,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"># 按小时统计</div><div class="line">SELECT  DATE_FORMAT(create_time, &apos;%Y-%m-%d %H&apos;) &apos;月份&apos;,COUNT(*) &apos;出库单数量&apos; FROM erp_warehouse_out</div><div class="line"> WHERE DATE_FORMAT(create_time,&apos;%Y-%m-%d&apos;)=&apos;2017-10-01&apos; GROUP BY DATE_FORMAT(create_time, &apos;%Y-%m-%d %H&apos;);</div><div class="line"> </div><div class="line"># 按日期统计</div><div class="line">SELECT  DATE_FORMAT(create_time, &apos;%Y-%m-%d&apos;) &apos;月份&apos;,COUNT(*) &apos;出库单数量&apos; FROM erp_warehouse_in</div><div class="line"> WHERE create_time&gt;&apos;2017-10-01 01:00:00&apos; GROUP BY DATE_FORMAT(create_time, &apos;%Y-%m-%d&apos;);</div></pre></td></tr></table></figure>
     
         <a href="/2017/10/01/mysql_datetime_count/" class="post-more waves-effect waves-button">
-            more...
+            继续阅读...
         </a>
     </div>
     
@@ -781,7 +781,7 @@
         <h2 id="info"><a href="#info" class="headerlink" title="info"></a>info</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">$ redis-cli -h 127.0.0.1 -p 4848 -a <span class="string">'pwd'</span> info </div><div class="line">	| grep -e <span class="string">"connected_clients"</span> -e <span class="string">"blocked_clients"</span> </div><div class="line">	-e <span class="string">"used_memory_human"</span> -e <span class="string">"used_memory_peak_human"</span> </div><div class="line">	-e <span class="string">"rejected_connections"</span> -e <span class="string">"evicted_keys"</span> </div><div class="line">	-e <span class="string">"instantaneous"</span></div><div class="line"></div><div class="line">connected_clients:203</div><div class="line">blocked_clients:0</div><div class="line">used_memory_human:1.45G</div><div class="line">used_memory_peak_human:1.89G</div><div class="line">instantaneous_ops_per_sec:2029</div><div class="line">instantaneous_input_kbps:1646.20</div><div class="line">instantaneous_output_kbps:2149.47</div><div class="line">rejected_connections:0</div><div class="line">evicted_keys:0</div></pre></td></tr></table></figure>
     
         <a href="/2017/09/26/redis-info/" class="post-more waves-effect waves-button">
-            more...
+            继续阅读...
         </a>
     </div>
     
@@ -852,7 +852,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 修改 catalina.sh 启动参数</span></div><div class="line">JAVA_OPTS=<span class="string">"-server</span></div><div class="line"><span class="string">-Xms6144m</span></div><div class="line"><span class="string">-Xms6144m</span></div><div class="line"><span class="string">-XX:MaxPermSize=1024m -XX:MetaspaceSize=512m</span></div><div class="line"><span class="string">-XX:+UseG1GC</span></div><div class="line"><span class="string">-XX:ParallelGCThreads=6</span></div><div class="line"><span class="string">-XX:NewRatio=2 -XX:ConcGCThreads=4</span></div><div class="line"><span class="string">-XX:MaxGCPauseMillis=300</span></div><div class="line"><span class="string">-XX:InitiatingHeapOccupancyPercent=50 -XX:G1HeapRegionSize=4m -XX:+ExplicitGCInvokesConcurrent</span></div><div class="line"><span class="string">-XX:+PrintGCDetails -Xloggc:/mnt/wwwroot/server/tomcat/gclog/report_tomcat_gc.log"</span></div></pre></td></tr></table></figure>
     
         <a href="/2017/09/24/javaD/java_exception_gc_overhead/" class="post-more waves-effect waves-button">
-            more...
+            继续阅读...
         </a>
     </div>
     
@@ -902,11 +902,11 @@
             </span>
         		
            	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">true</a>
+           	</span>
+           	
             
-            
-            <span>
-	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
-            </span>
             
             
             
