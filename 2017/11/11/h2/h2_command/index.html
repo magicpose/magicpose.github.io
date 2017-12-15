@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     
     
-    <title>GitBook Read | Pivot&#39;s Blog | blog.magicpose.com</title>
+    <title>H2 数据库常用基本命令 | Pivot&#39;s Blog | blog.magicpose.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="GitBook">
+    <meta name="keywords" content="h2">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="/css/style.css?v=1.1.2">
     <script type="text/javascript">
@@ -104,7 +104,7 @@
           <i class="icon icon-lg icon-navicon"></i>
         </a>
         <div class="flex-col header-title ellipsis">
-            <span>GitBook Read</span>
+            <span>H2 数据库常用基本命令</span>
             
         </div>
         
@@ -116,11 +116,11 @@
 </header>
 <header class="content-header post-header" style="background-image: url(false)">
     <div class="container fade-scale">
-        <h1 class="title">GitBook Read</h1>
+        <h1 class="title">H2 数据库常用基本命令</h1>
         <h5 class="subtitle">
             
-                <time datetime="2017-11-10T01:32:49.868Z" itemprop="datePublished" class="page-time">
-  2017-11-10
+                <time datetime="2017-11-11T10:00:11.484Z" itemprop="datePublished" class="page-time">
+  2017-11-11
 </time>
 
 
@@ -147,18 +147,18 @@
 
 
 <div class="container body-wrap">
-    <article id="post-gitbook/directory"
+    <article id="post-h2/h2_command"
   class="post-article article-type-post fade" itemprop="blogPost">
     <div class="post-card">
-        <h1 class="post-card-title">GitBook Read</h1>
+        <h1 class="post-card-title">H2 数据库常用基本命令</h1>
         <div class="post-meta">
-            <time class="post-time" title="2017-11-10 09:32:49" datetime="2017-11-10T01:32:49.868Z"  itemprop="datePublished">2017-11-10</time>
+            <time class="post-time" title="2017-11-11 18:00:11" datetime="2017-11-11T10:00:11.484Z"  itemprop="datePublished">2017-11-11</time>
 
             
 
 
             
-	<span id="/2017/11/10/gitbook/directory/" class="leancloud_visitors" data-flag-title="GitBook Read" title="GitBook Read">
+	<span id="/2017/11/11/h2/h2_command/" class="leancloud_visitors" data-flag-title="H2 数据库常用基本命令" title="H2 数据库常用基本命令">
 		
 			<i class="icon icon-eye"></i>
 		
@@ -169,8 +169,8 @@
             
     <span>
         <i class="icon icon-comment-o"></i>
-        <a href="/2017/11/10/gitbook/directory/#comment">
-            <span class="valine-comment-count" data-xid="/2017/11/10/gitbook/directory/"></span>
+        <a href="/2017/11/11/h2/h2_command/#comment">
+            <span class="valine-comment-count" data-xid="/2017/11/11/h2/h2_command/"></span>
         </a>
     </span>
 
@@ -178,7 +178,14 @@
             
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>## </p>
+            <h2 id="SQL语法说明及设置自动完成"><a href="#SQL语法说明及设置自动完成" class="headerlink" title="SQL语法说明及设置自动完成"></a>SQL语法说明及设置自动完成</h2><p>基本和My算起来语法相同,如果有问题,可以开启自动提示</p>
+<a id="more"></a>
+<figure class="image-box">
+                <img src="http://blog.magicpose.com/img/h2/h2-03.png" alt="H2管理自定义设置界面" title="" class="">
+                <p>H2管理自定义设置界面</p>
+            </figure>
+<h2 id="常用基本命令"><a href="#常用基本命令" class="headerlink" title="常用基本命令"></a>常用基本命令</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">table</span> <span class="keyword">if</span> <span class="keyword">exists</span> MINE;  </div><div class="line"></div><div class="line">## 创建表</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> mine (  </div><div class="line"> <span class="keyword">id</span> <span class="built_in">int</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT ,  </div><div class="line"> <span class="keyword">desc</span> <span class="built_in">varchar</span>(<span class="number">32</span>) ,  </div><div class="line"> vala <span class="built_in">varchar</span>(<span class="number">32</span>) ,  </div><div class="line"> valb <span class="built_in">varchar</span>(<span class="number">32</span>)  ,  </div><div class="line"> valc <span class="built_in">varchar</span>(<span class="number">32</span>)  ,  </div><div class="line"> vald <span class="built_in">varchar</span>(<span class="number">32</span>)  ,  </div><div class="line"> vale <span class="built_in">varchar</span>(<span class="number">32</span>)  </div><div class="line">); </div><div class="line"></div><div class="line">## 添加字段</div><div class="line"><span class="keyword">alter</span> <span class="keyword">table</span> MINE <span class="keyword">add</span>  userName <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">AFTER</span> <span class="keyword">id</span>;</div><div class="line"></div><div class="line">## 删除字段</div><div class="line"><span class="keyword">alter</span> <span class="keyword">table</span> mine <span class="keyword">drop</span> <span class="keyword">COLUMN</span> answer;</div><div class="line"></div><div class="line"># 设置列默认值</div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> MYCLOUD <span class="keyword">ALTER</span> <span class="keyword">COLUMN</span> <span class="keyword">ID</span> <span class="keyword">set</span> <span class="keyword">not</span> <span class="literal">null</span> ;</div><div class="line"></div><div class="line"># 设置主键</div><div class="line"><span class="keyword">CREATE</span> PRIMARY <span class="keyword">KEY</span> <span class="string">"PRIMARY_KEY_MYCLOUD_ID "</span><span class="keyword">ON</span> MYCLOUD ( <span class="keyword">ID</span> ) ;</div></pre></td></tr></table></figure>
+<p>注意使用 <code>create table a as select * from b</code> 创建的表,可能没有主键,无法编辑数据,需要设置主键</p>
 
         </div>
         
@@ -186,12 +193,12 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2017-11-10T01:34:18.321Z" itemprop="dateUpdated">2017-11-10 09:34:18</time>
+    最后更新时间：<time datetime="2017-11-22T03:36:14.438Z" itemprop="dateUpdated">2017-11-22 11:36:14</time>
 </span><br>
 
 
         
-        转载注明出处，原文地址：<a href="/2017/11/10/gitbook/directory/" target="_blank" rel="external">http://blog.magicpose.com/2017/11/10/gitbook/directory/</a>
+        转载注明出处，原文地址：<a href="/2017/11/11/h2/h2_command/" target="_blank" rel="external">http://blog.magicpose.com/2017/11/11/h2/h2_command/</a>
         
     </div>
     <footer>
@@ -211,7 +218,7 @@
         
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitBook/">GitBook</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/h2/">h2</a></li></ul>
 
             <div class="page-share-wrap">
     
@@ -220,7 +227,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.magicpose.com/2017/11/10/gitbook/directory/&title=《GitBook Read》 — Pivot's Blog&pic=http://blog.magicpose.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.magicpose.com/2017/11/11/h2/h2_command/&title=《H2 数据库常用基本命令》 — Pivot's Blog&pic=http://blog.magicpose.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -232,7 +239,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.magicpose.com/2017/11/10/gitbook/directory/&title=《GitBook Read》 — Pivot's Blog&source=善人同处，则日闻嘉训；恶人从游，则日生邪情" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.magicpose.com/2017/11/11/h2/h2_command/&title=《H2 数据库常用基本命令》 — Pivot's Blog&source=SQL语法说明及设置自动完成基本和My算起来语法相同,如果有问题,可以开启自动提示" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -259,18 +266,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2017/11/11/h2/h2 command/" id="post-prev" class="post-nav-link">
+      <a href="/2017/11/13/english/expertise/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">H2 数据库常用基本命令</h4>
+        <h4 class="title">专业名词解释 1</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2017/10/25/eat/menu/" id="post-next" class="post-nav-link">
+      <a href="/2017/11/10/gitbook/view/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">这一天天的吃食</h4>
+        <h4 class="title">GitBook Read</h4>
       </a>
     </div>
   
@@ -310,6 +317,13 @@
 
 </div>
 
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SQL语法说明及设置自动完成"><span class="post-toc-number">1.</span> <span class="post-toc-text">SQL语法说明及设置自动完成</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常用基本命令"><span class="post-toc-number">2.</span> <span class="post-toc-text">常用基本命令</span></a></li></ol>
+        </nav>
+    </aside>
+    
         <footer class="footer">
     
     <div class="top">
@@ -364,7 +378,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.magicpose.com/2017/11/10/gitbook/directory/&title=《GitBook Read》 — Pivot's Blog&pic=http://blog.magicpose.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://blog.magicpose.com/2017/11/11/h2/h2_command/&title=《H2 数据库常用基本命令》 — Pivot's Blog&pic=http://blog.magicpose.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -376,7 +390,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.magicpose.com/2017/11/10/gitbook/directory/&title=《GitBook Read》 — Pivot's Blog&source=善人同处，则日闻嘉训；恶人从游，则日生邪情" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://blog.magicpose.com/2017/11/11/h2/h2_command/&title=《H2 数据库常用基本命令》 — Pivot's Blog&source=SQL语法说明及设置自动完成基本和My算起来语法相同,如果有问题,可以开启自动提示" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -388,7 +402,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3ay66DMAyEYd7/pem2EiWa8UCl2H9W6IhCPhY+8eU45HVe1vff766v9ytPu97/2IIBA8a2jHO51vfcPWf9Lp2t7A0GDBhzGO4r19d3sPW73PthwIABQwmO+qZrW4QBAwaMnKG80t0QDBgwYCRJbJLQ6qW313NxGDBgbMjQq+7/v36lvwEDBoytGKe5cuoru4IBA0Zrhv6ap46ASrOzuB8YMGC0ZujbctPXWph2PwoMGDAmMPQQKQW7YNjCvf7xfwMGDBjtGLVCvBJw9WZn8rFgwIAxjeG2MPPkMxnOsKuGMGDA2JahhMVaOLaD5nJETGozwIABoymj1mhMWpX5+NePN8KAAWMAQynuJ0j3OKinwTBgwJjAcBPR5CBonFXlJPZwfwwDBowNGae88uRT/67RhAgMGDDaMZJy/FMtSbfYFx0NYcCAsSHDTReVh7qBO0meYcCAMYFRO5DpjYH8cGmPa8CAAaMpQ2kT1hoD7p21cA8DBow5DHfQwW1Yukms3TyAAQPGAEYSfN0KX17Uk6Y8YMCA0ZqhpJ1umSwZNZM+OgwYMJoyTnO54dVtBtiJq9uXgAEDxoYMN8wlD62lysWZERgwYLRj6EFWD6nKIVJpD9hJLAwYMFozamW4fGgsb3zCgAEDRm0wQt+cO2T2YsCFAQNGI0Ztozq79slgwIAxgaE3A5KRr7wJCgMGjJmMWuqoM/TjZl6qgwEDRjvGB/twIuBi/8GDAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aS27DMAwFwNz/0inQXYHYfSTtopZGq6A1LE0WDD96veL1/l5Hn3v/TZ6/eGFgYDyW8T5dR88cHeucff6XZN9DKgYGxgaM5CjnTyaBMiflZ8PAwMDIQ2ROTRYGBgbGhJHzkvBdLXoxMDB2ZuSBr3eIXoF6Sy2OgYHxQMZ8MHDf5z+db2BgYPxLxlWF5TzJmywMDIy1Gb3xZN7iz4cHeZAtZLgYGBhLMPJysVrQVkNzL1n88buBgYGxKCM5Sp78VQvgarT85bQYGBiLMqrt/l6x2hsY5LtjYGDswMhTvfyKRi80V0cU0ZYYGBjLMa6ai07SzeoPAAYGxm6MauOsN55M9iqcAQMDYwNG9aV3pHqTlhwGBsbajN5IspdQ9srjwi4YGBhLM5rt+DiZqw4Sql8oBgbGPow88PVenZemV40uMDAwVmIk208SuGoRW23YYWBg7MCotr2ufbL35gu6dxgYGA9k5C+dNON64F5aiYGBsQYjr2gnVyXy8WeC/PBmDAyMbRjz61mT62XJigpXDAyM5RjVoWDvmkU+AMgrUwwMjH0Y7+JKRpuT8NosazEwMJZm5CsPxMklsDxkV5t6GBgYqzJ6QXBSjubUwkwDAwNjA0b14te89J1fI/sQcDEwMLZn5A36alDOx5+H78fAwMAIKuCEWm3h5V8BBgbGDoxJs75wGWKAv6XdhoGB8RBGbzCQb1a9rnELAAMD46mML9LIPOLQ6mdXAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

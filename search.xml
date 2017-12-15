@@ -4,7 +4,7 @@
     
     <entry>
       <title><![CDATA[H2 数据库安装]]></title>
-      <url>/2017/11/22/h2/install%20h2/</url>
+      <url>/2017/11/22/h2/h2_install/</url>
       <content type="html"><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a href="http://www.h2database.com" target="_blank" rel="external">H2官方站点</a><br><a id="more"></a></p>
 <h3 id="安装JAVA环境-设置JAVA-HOME-CLASSPATH"><a href="#安装JAVA环境-设置JAVA-HOME-CLASSPATH" class="headerlink" title="安装JAVA环境,设置JAVA_HOME,CLASSPATH"></a>安装JAVA环境,设置JAVA_HOME,CLASSPATH</h3><p>下载安装不多说<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># linux下设置java环境变量</span></div><div class="line">vim /etc/profile</div><div class="line"></div><div class="line"><span class="built_in">export</span> JAVA_HOME=/opt/java/jdk1.8.0_151</div><div class="line"><span class="built_in">export</span> JAVA_BIN=<span class="variable">$JAVA_HOME</span>/bin</div><div class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib/dt.jar:<span class="variable">$JAVA_HOME</span>/lib/tools.jar</div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></div><div class="line"></div><div class="line"><span class="comment"># 使设置生效</span></div><div class="line"><span class="built_in">source</span> /etc/profile</div></pre></td></tr></table></figure></p>
 <h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>下载H2压缩包,解压,进入目录,<code>build.bat</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd bin</div><div class="line"># 运行 h2.bat</div><div class="line">h2.bat</div></pre></td></tr></table></figure></p>
@@ -89,7 +89,7 @@
     
     <entry>
       <title><![CDATA[专业名词解释 1]]></title>
-      <url>/2017/11/13/english/directory/</url>
+      <url>/2017/11/13/english/expertise/</url>
       <content type="html"><![CDATA[<h2 id="网站访问量"><a href="#网站访问量" class="headerlink" title="网站访问量"></a>网站访问量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 日活跃用户</div><div class="line">DAU: Daily Active User</div><div class="line"># 日活跃用户  </div><div class="line">UV: Unique Visitor</div></pre></td></tr></table></figure>
 <h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="字符集排序规则命名"><a href="#字符集排序规则命名" class="headerlink" title="字符集排序规则命名"></a>字符集排序规则命名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># _ci结尾表示忽略大小写</div><div class="line">ci : case insensitive [ɪn&apos;sensətɪv]</div><div class="line"># _cs结尾表示不忽略大小写</div><div class="line">cs : case sensitive [&apos;sensətɪv]</div><div class="line"># _bin表示二进制比较</div><div class="line">bin : binary[&apos;baɪnəri]</div><div class="line"></div><div class="line"></div><div class="line">SHOW COLLATION LIKE &apos;gbk%&apos;;</div></pre></td></tr></table></figure>]]></content>
       
@@ -104,7 +104,7 @@
     
     <entry>
       <title><![CDATA[H2 数据库常用基本命令]]></title>
-      <url>/2017/11/11/h2/h2%20command/</url>
+      <url>/2017/11/11/h2/h2_command/</url>
       <content type="html"><![CDATA[<h2 id="SQL语法说明及设置自动完成"><a href="#SQL语法说明及设置自动完成" class="headerlink" title="SQL语法说明及设置自动完成"></a>SQL语法说明及设置自动完成</h2><p>基本和My算起来语法相同,如果有问题,可以开启自动提示</p>
 <a id="more"></a>
 <figure class="image-box">
@@ -126,7 +126,7 @@
     
     <entry>
       <title><![CDATA[GitBook Read]]></title>
-      <url>/2017/11/10/gitbook/directory/</url>
+      <url>/2017/11/10/gitbook/view/</url>
       <content type="html"><![CDATA[<p>## </p>
 ]]></content>
       
