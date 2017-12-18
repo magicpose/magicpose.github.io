@@ -8,7 +8,7 @@
       <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>Tomcat部署项目后单独能启动,但是在eclipse中无法启动,具体表现为不报错误,卡在100% <code>preparing launch delegate</code>一直在等待直到超时</p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>在<code>eclipse</code>中直接<code>start</code>,不要<code>debug</code>看看能否启动,能正常启动则是因为代码里面设置了<em>断点</em>的原因,这个很坑,一定要注意</p>
 <p>网上搜索发现还有可能是其他原因导致,不常见,没碰到就不说了,搜索直接搜<code>preparing launch delegate</code> 就能找到</p>
-<p>出现具体原因没有深究,只是不要在这种事情上面浪费时间就行了</p>
+<p>问题的具体原因没有深究,只是不要在这种事情上面浪费时间就行了</p>
 ]]></content>
       
         <categories>
