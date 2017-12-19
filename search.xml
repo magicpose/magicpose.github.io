@@ -256,24 +256,19 @@
     <entry>
       <title><![CDATA[first]]></title>
       <url>/2017/09/21/first/</url>
-      <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
-</blockquote>]]></content>
+      <content type="html"><![CDATA[<h1 id="不错的makedown教程"><a href="#不错的makedown教程" class="headerlink" title="不错的makedown教程"></a>不错的makedown教程</h1><p><a href="https://segmentfault.com/markdown" target="_blank" rel="external">https://segmentfault.com/markdown</a></p>
+]]></content>
       
         <categories>
             
-            <category> 测试 </category>
+            <category> markdown </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> edaw </tag>
-            
-            <tag> test </tag>
-            
-            <tag> uec </tag>
+            <tag> markdown </tag>
             
         </tags>
         
